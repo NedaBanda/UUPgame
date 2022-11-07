@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+int main() {
+    float niz1[50], niz2[50], niz[50]={-1};
+    int brojac1=0, brojac2=0, brojac3=0;
+    int i=0, i2=0, j=0, k=0, g=0, l=0, testdupljaka=0, prazanDN;
+    printf("\nUnesite elemente 1.niza (-1 kraj): ");
+    do{
+        
+        scanf("%f",&niz1[i]);
+        brojac1++;
+        i++;
+    }while(niz1[i-1]!=-1 && brojac1<50);
+    i2=0;
+    printf("\nUnesite elemente 2.niza (-1 kraj): ");
+    do{
+        
+        scanf("%f",&niz2[i2++]);
+        brojac2++;
+    }while(niz2[i2-1]!=-1 && brojac2<50); 
+    brojac2--, brojac1--;
+
+    for (j=0; j<brojac1; j++) {
+        for(k=0;k<brojac2;k++){
+            if(niz1[j]==niz2[k]){
+                testdupljaka=0;
+                for(l=0;l<g;l++){
+                    if(niz1[j]==niz[l]){
+                        testdupljaka=1;
+                        break;
+                    }
+                }
+                if(testdupljaka==0){
+                    niz[g]=niz1[j];
+                    g++;
+                    brojac3++;
+                    break;
+                }
+            }
+        }
+    } 
+
+
+    if(niz[0]==-1) printf("Presjek unesenih nizova je prazan skup!\n");
+    else{
+    printf("\nPresjek unesenih nizova je: ");
+    for(i=0;i<=brojac3-1;i++){
+        if(i==brojac3-1) printf("%g",niz[i]);
+        else printf("%g, ",niz[i]);
+    
+    }
+    }
+	return 0;
+}
