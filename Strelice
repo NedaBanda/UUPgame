@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int main() {
+    int n, i,j;
+    printf("Unesite n: ");
+    scanf("%d", &n);
+    if(n<2){
+        printf("Neispravan unos");
+    }
+    else{
+        for(i=0;i<n;i++){
+            for(j=0;j<=2*n;j++){
+                if(j>i && j<2*n-i)printf(" ");
+                else printf("*"); 
+            }
+            printf("\n");
+        }
+        for(i=n-2;i>=0;i--){
+            for(j=0;j<=2*n;j++){
+                if(j>i && j<2*n-i)printf(" ");
+                else printf("*");                 
+            }
+            printf("\n");
+        }
+    }
+
+
+	return 0;
+}
+
+/*
+Napisati program koji za uneseno n ispisuje dvije simetrične strelice (u ogledalu) dimenzija 2n × n. 
+Ukoliko je n manje od 2, program treba ispisati grešku i završiti s radom. Primjer ispisa:
+
+Unesite n: 5
+*         *
+**       **
+***     ***
+****   ****
+***** *****
+****   ****
+***     ***
+**       **
+*         *
+*/
