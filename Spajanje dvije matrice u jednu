@@ -1,0 +1,92 @@
+#include <stdio.h>
+
+int main() {
+    int i, j, p, q, r, s;
+    int A[10][10], B[10][10], C[20][20];
+
+    /* === OVDJE UBACITI KOD === */
+    //unos dimenzija za matrice A i B :)
+    printf("Unesite dimenzije matrice A (p q): ");
+    scanf("%d %d",&p, &q);
+    if(p<1 || q<1 ) {
+        printf("Neispravne dimenzije matrice!");
+        return 0 ;
+    }
+    else if(p>10 || q>10){
+        printf("Matrica A je prevelika!");
+        return 0;
+    }
+    printf("Unesite dimenzije matrice B (r s): ");
+    scanf("%d %d",&r, &s);
+        if(r<1 || s<1) {
+        printf("Neispravne dimenzije matrice!");
+        return 0 ;
+    }
+        else if(r>10 || s>10){
+        printf("Matrica B je prevelika!");
+        return 0;
+    }
+    if(q!=s) {
+        printf("Matrice nisu saglasne za konkatenaciju!");
+        return 0;
+    }
+    //Unos elemenata matrice A :)
+    printf("Matrica A:\n");
+    for(i=0;i<p;i++){
+        printf("%d. red: ",i+1);
+        for(j=0;j<q;j++) scanf("%d",&A[i][j]);
+    }
+    //Unos elemenata matrice B :)
+    printf("Matrica B:\n");
+    for(i=0;i<r;i++){
+        printf("%d. red: ",i+1);
+        for(j=0;j<s;j++) scanf("%d",&B[i][j]);
+    }
+    //Unos elemenata u matricu C :)
+    for(i=0;i<p+r;i++){
+        for(j=0;j<q;j++){
+            if(i<p) C[i][j]=A[i][j];
+            else C[i][j]=B[i-p][j];
+        }
+    }
+
+
+
+    /* Ispis matrice C na ekran */
+    printf ("Matrica C:\n");
+    for (i=0; i<p+r; i++) {
+        for (j=0; j<q; j++) {
+            printf ("%4d", C[i][j]);
+        }
+        printf("\n");
+    }
+    
+    return 0;
+}
+/*
+Napisati program koji prvo od korisnika traži da unese dimenzije matrica A i B, zatim unosi elemente tih matrica, 
+te vertikalno nadovezuje (konketuje) matrice A i B u matricu C, koju ispisuje na ekranu na 4 mjesta širine. 
+Ako matrice nisu saglasne za nadovezivanje (nemaju isti broj redova) ili ako su unesene dimenzije prevelike (veće od 10), 
+program ispisuje grešku i završava s radom.
+
+Primjeri ulaza i izlaza:
+
+Unesite dimenzije matrice A (p q): 2 3
+Unesite dimenzije matrice B (r s): 3 3
+Matrica A:
+1. red: 1 2 3
+2. red: 3 2 1
+Matrica B:
+1. red: 0 0 0
+2. red: 5 6 7
+3. red: 9 8 7
+Matrica C:
+   1   2   3
+   3   2   1
+   0   0   0
+   5   6   7
+   9   8   7
+Napomena: Pri rješavanju zadatka obavezno deklarisati i unijeti matrice A i B, zatim popuniti matricu C odgovarajućim brojevima, 
+te na kraju ispisati matricu C na ekran. Zadaci koji ne budu urađeni na ovaj način neće biti priznati!
+
+*/
