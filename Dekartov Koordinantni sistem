@@ -1,0 +1,149 @@
+#include <stdio.h>
+
+int main() {
+    int n,x,y, i,j, ny, nx;
+    do{
+    printf("\nUnesite dimenziju: ");
+    scanf("%d",&n);
+    if(n!=-1){
+    printf("Unesite (x y): ");
+    scanf("%d %d",&x, &y);
+    //postavljanje na 2n x 4n KS
+    nx=4*n+3;
+    ny=2*n+3;
+    //transformiranje koordinata za ispis na pravu poziciju
+    x=nx/2+x;
+    y=ny/2-y;
+    //provjeravanje da li upada u nas KS
+    if(x>0 && x<nx && y>0 && y<ny){
+    //crtanje KS
+    for(i=0;i<ny;i++){
+        for(j=0;j<nx;j++){
+            if(i==y){
+                if(i==ny/2){
+                    if(j==x)printf("x");
+                    else if(j==0)printf("<");
+                    else if(j==nx/2)printf("+");
+                    else if(j==nx-1)printf(">");
+                    else printf("-"); 
+                }
+                else if(j==x){
+                    printf("x");
+                    if(x>=nx/2 && i!=ny/2) break;
+                    
+                }
+                else if (j==nx/2){
+                    printf("|");
+                    if(j>x)break;
+                }
+                else printf(" ");
+
+            }
+            else if(i==0 && j==nx/2){
+                printf("^"); break;
+            }
+            else if(i==ny/2){
+                if(j==0)printf("<");
+                else if(j==nx/2)printf("+");
+                else if(j==nx-1)printf(">");
+                else printf("-");
+            }
+            else if(i==ny-1 && j==nx/2) {
+                printf("v");break;
+            }
+            else if(j==nx/2){
+            printf("|");break;
+            }
+            else printf(" ");
+        }
+        printf("\n");
+    }
+    }
+    else {
+        printf("Koordinate tacke izvan opsega!\n");
+        return 0;
+    }
+    }
+    }while(n!=-1);
+    printf("Zavrsio!\n");
+	return 0;
+}
+/*
+Napisati program koji iscrtava Descartesov koordinatni sistem (u nastavku KS) i tačku na njemu. 
+Korisnik unosi n, dimeziju KS-a, a program iscrtava 2n × 4n pôlja KS-a, tj. svaki kvadrant KS-a ima dimenziju n × 2n 
+(ovo je odabrano zbog odnosa visine i širine znakova na konzoli).
+
+U centru KS-a je iscrtan znak „+“, na „krajevima“ x-ose su znakovi „<“ i „>“, dok su na „krajevima“ y-ose znakovi „^“ i „v“ (ovo je slovo „v“). 
+Nakon unosa n, korisnik unosi i koordinate tačke na kojoj će program ispisati znak „x“. 
+Ukoliko su koordinate tačke van „opsega“ KS-a, program treba ispisati grešku i završiti s radom. 
+Unos parametara i iscrtavanje ponavljati sve dok korisnik ne unese broj -1 kao dimenziju KS-a (n).
+
+Primjeri ulaza i izlaza:
+
+Unesite dimenziju: 4
+Unesite (x y): -3 3
+         ^
+         |
+      x  |
+         |
+         |
+<--------+-------->
+         |
+         |
+         |
+         |
+         v
+
+Unesite dimenziju: 4
+Unesite (x y): 8 4
+         ^
+         |       x
+         |
+         |
+         |
+<--------+-------->
+         |
+         |
+         |
+         |
+         v
+
+
+
+
+Unesite dimenziju: 4
+Unesite (x y): 0 2
+         ^
+         |
+         |
+         x
+         |
+<--------+-------->
+         |
+         |
+         |
+         |
+         v
+
+Unesite dimenziju: 4
+Unesite (x y): 0 0
+         ^
+         |
+         |
+         |
+         |
+<--------x-------->
+         |
+         |
+         |
+         |
+         v
+
+Unesite dimenziju: -1
+Zavrsio!
+Primjer 2:
+
+Unesite dimenziju: 4
+Unesite (x y): 8 5
+Koordinate tacke izvan opsega!
+*/
