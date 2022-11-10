@@ -1,0 +1,113 @@
+#include <stdio.h>
+
+int main() {
+    char vozilo;
+    int crna=0, bijela=0, siva=0, crvena=0, plava=0, brojAuta=0, kraj=0;
+    float popularnoV;
+    printf("Unesite vozila: ");
+    while(kraj!=-1){
+        scanf("%c",&vozilo);
+        switch (vozilo) {
+        case 'C':
+            crna++;
+            break;
+        case 'c': 
+            crna++;
+            break;
+        case 'B': 
+            bijela++;
+            break;
+        case 'b': 
+            bijela++;
+            break;
+        case 'S': 
+            siva++;
+            break;
+        case 's': 
+            siva++;
+            break;
+        case 'V': 
+            crvena++;
+            break;
+        case 'v': 
+            crvena++;
+            break;
+        case 'p': 
+            plava++;
+            break;
+        case 'P': 
+            plava++;
+            break;
+        case 'K':
+            kraj=-1;
+            break;
+        case 'k': 
+            kraj=-1;
+            break;
+        default:
+        printf("Neispravan unos\n");
+        break;
+        }
+        brojAuta=crna+bijela+siva+crvena+plava;
+        }
+        printf("Ukupno evidentirano %d vozila.\n",brojAuta);
+        if(brojAuta==0) {
+            popularnoV=0;
+            printf("Najpopularnija boja je crna (%.2f%%).",popularnoV);//??
+        }
+        else if(crna>=bijela && crna>=siva && crna>=crvena && crna>=plava){
+            popularnoV=(float)crna/brojAuta*100;
+            printf("Najpopularnija boja je crna (%.2f%%).",popularnoV);
+        }
+        else if(bijela>=crna && bijela>=siva && bijela>=crvena && bijela>=plava){
+            popularnoV=(float)bijela/brojAuta*100;
+            printf("Najpopularnija boja je bijela (%.2f%%).",popularnoV);
+        }
+        else if(siva>=crna && siva>=bijela && siva>=crvena && siva>=plava){
+            popularnoV=(float)siva/brojAuta*100;
+            printf("Najpopularnija boja je siva (%.2f%%).",popularnoV);
+        }
+        else if(crvena>=crna && crvena>=siva && crvena>=bijela && crvena>=plava){
+            popularnoV=(float)crvena/brojAuta*100;
+            printf("Najpopularnija boja je crvena (%.2f%%).",popularnoV);
+        }
+        else if(plava>=crna && plava>=siva && plava>=crvena && plava>=bijela){
+            popularnoV=(float)plava/brojAuta*100;
+            printf("Najpopularnija boja je plava (%.2f%%).",popularnoV);
+        }
+
+	return 0;
+}
+
+/*
+Selmi je bilo dosadno dok je čekala da počnu predavanja, pa je došla do raskrsnice sa idejom da utvrdi koja boja automobila je najpopularnija u Sarajevu. 
+Njen plan je da u računaru evidentira boju svakog automobila koji prođe kroz raskrsnicu. 
+Radi jednostavnosti programa evidentiraće automobile pet boja: crna, bijela, siva, crvena i plava. 
+Boje koje su slične nabrojanim (metalik, bordo…) će evidentirati kao osnovne boje, a rijetko korištene boje (zelena, žuta, ljubičasta…) 
+neće ni brojati jer nema šansi da neka od tih bude najpopularnija.
+
+Za unos boja koristiće slova i to:
+
+C - crna
+B - bijela
+S - siva
+V - crvena
+P - plava
+K - kraj unosa
+Program treba prihvatati i velika i mala slova, dakle ako Selma unese veliko C ili malo c brojaće se kao jedan automobil crne boje. 
+Za sve ostale znakove treba ispisati poruku "Neispravan unos" i nastaviti dalje sa unosom.
+
+Nakon što se unese slovo K treba ispisati broj ukupno evidentiranih automobila, boju koja je najpopularnija i procentualni udio vozila te boje u ukupnom broju, 
+pri čemu procenat treba biti zaokružen na dvije decimale. Ako je za više boja evidentiran isti broj vozila, 
+treba ispisati onu boju koja je navedena ranije u spisku iznad (npr. ako je evidentiran jednak broj automobila sive i plave boje i to su dvije najpopularnije boje, 
+treba ispisati procenat vozila sive boje jer se siva boja pojavljuje ranije na spisku).
+
+Primjer ulaza i izlaza:
+
+Unesite vozila: CCbcsVSsCsPk
+Ukupno evidentirano 11 vozila.
+Najpopularnija boja je crna (36.36%).
+Savjet: Ako unosite slova koristeći format "%c" nemojte ih razdvajati razmacima niti novim redovima.
+
+Napomena: Pri rješavanju programa nije dozvoljeno koristiti nizove.
+*/
