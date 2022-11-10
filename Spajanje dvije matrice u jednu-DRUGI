@@ -1,0 +1,87 @@
+#include <stdio.h>
+
+int main() {
+    int i, j, p, q, r, s;
+    int A[10][10], B[10][10], C[20][20];
+
+    printf("Unesite dimenzije matrice A (p q): ");
+    scanf("%d %d",&p, &q);
+    if(p<1 || q<1){
+        printf("Neispravne dimenzije matrice!");
+        return 0;
+    }
+    else if(p>10 || q>10){
+        printf("Matrica A je prevelika!");
+        return 0;
+    }
+    printf("Unesite dimenzije matrice B (r s): ");
+    scanf("%d %d",&r, &s);
+    if(r<1 || s<1){
+        printf("Neispravne dimenzije matrice!");
+        return 0;
+    }
+    else if(r>10 || s>10){
+        printf("Matrica B je prevelika!");
+        return 0;
+    }
+    if(p!=r){
+        printf("Matrice nisu saglasne za konkatenaciju!");
+        return 0;
+    }
+    
+    printf("Matrica A:\n");
+    for(i=0;i<p;i++){
+        printf("%d. red: ",i+1);
+        for(j=0;j<q;j++){
+            scanf("%d",&A[i][j]);
+        }
+    }
+
+    printf("Matrica B:\n");
+    for(i=0;i<r;i++){
+        printf("%d. red: ",i+1);
+        for(j=0;j<s;j++){
+            scanf("%d",&B[i][j]);
+        }
+    }
+
+    for(i=0;i<p;i++){
+        for(j=0;j<q;j++){
+            C[i][j]=A[i][j];
+        }
+        for(;j<q+s;j++){
+            C[i][j]=B[i][j-q];
+        }
+    }
+
+    /* Ispis matrice C na ekran */
+    printf ("Matrica C:\n");
+    for (i=0; i<p; i++) {
+        for (j=0; j<q+s; j++) {
+            printf ("%4d", C[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+
+/*
+Napisati program koji prvo od korisnika traži da unese dimenzije matrica A i B, zatim unosi elemente tih matrica,
+te horizontalno konketuje matrice A i B u matricu C, koju ispisuje na ekranu na 4 mjesta širine. 
+Ako matrice nisu saglasne za nadovezivanje (nemaju isti broj redova) ili ako su unesene dimenzije prevelike (veće od 10), program ispisuje grešku i završava s radom.
+
+Primjeri ulaza i izlaza:
+
+Unesite dimenzije matrice A (p q): 2 4
+Unesite dimenzije matrice B (r s): 2 3
+Matrica A:
+1. red: 1 2 3 4
+2. red: 4 3 2 1
+Matrica B:
+1. red: 7 8 9
+2. red: 9 8 7
+Matrica C:
+   1   2   3   4   7   8   9
+   4   3   2   1   9   8   7
+Napomena: Zadatak obavezno riješiti koristeći tri matrice, te na kraju ispisati treću matricu na ekran bez ikakvih dodatnih manipulacija.
+*/
