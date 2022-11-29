@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+int potpun_kvadrat(int a){
+    int i=1;
+    if(a<0) a*=-1;
+    for(;i<=a;i++){
+        if(i*i == a) return 1;
+        else if(i*i >a) return 0;
+    }
+    return 0;
+}
+
+int main() {
+    int n;
+    printf("Unesite n: ");
+    scanf("%d",&n);
+    (potpun_kvadrat(n))==1 ? printf("Broj %d je potpun kvadrat.",n) : printf("Broj %d nije potpun kvadrat.",n);
+
+	return 0;
+}
+
+
+/*
+Napisati funkciju int potpun_kvadrat(int a) koja vraća vrijednost 1 ako je broj a potpun kvadrat (a je kvadrat nekog broja), a vraća vrijednost 0 u suprotnom. 
+Na primjer, za broj 64 će biti vraćena vrijednost 1, jer je 64 = 82. U slučaju da se funkciji proslijedi negativan broj, 
+zanemariti predznak te nastaviti rad kao da je proslijeđen pozitivan broj.
+
+Pri rješavanju zadatka nije dozvoljeno koristiti biblioteku math.h.
+
+Napisati i kraću main funkciju koja omogućuje testiranje napisane funkcije potpun_kvadrat. Primjeri ulaza i izlaza:
+
+Unesite n: 64
+Broj 64 je potpun kvadrat.
+Drugi primjer:
+
+Unesite n: 24
+Broj 24 nije potpun kvadrat.
+*/
