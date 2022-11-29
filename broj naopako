@@ -1,0 +1,28 @@
+#include <stdio.h>
+int obrnut(int n){
+    int novbroj=0;
+    for(;n>0;n/=10){
+        novbroj=novbroj * 10 +(n%10);
+    }
+    return novbroj;
+}
+
+int main() {
+    int n;
+    printf("Unesite broj: ");
+    scanf("%d", &n);
+    printf("Broj %d okrenut naopako glasi %d.",n,obrnut(n));
+	return 0;
+}
+
+
+/*
+Napišite funkciju obrnut koja vraća primljeni pozitivan cijeli broj okrenut naopako. 
+Npr. ako se funkcija pozove sa vrijednošću 12345 (dvanaest hiljada tristo četrdeset i pet), treba vratiti broj 54321 (pedeset četiri hiljade tristo dvadeset i jedan). 
+Pri tome nije dozvoljeno koristiti nizove niti raditi bilo kakav ispis u funkciji!
+
+Napisati i kraću main funkciju koja omogućuje testiranje napisane funkcije obrnut. Primjer ulaza i izlaza:
+
+Unesite broj: 12345
+Broj 12345 okrenut naopako glasi 54321.
+*/
