@@ -1,0 +1,66 @@
+#include <stdio.h>
+
+int main() {
+    int matrica[100][100],m,n, sumeReda[100]={0}, sumeKolona[100]={0}, jednakeSume=1, jednakeKolone=1;
+    int i, j;
+    printf("Unesite brojeve M i N: ");
+    scanf("%d %d",&m, &n);
+    while(m<1 || m>100 || n<1 || n>100){
+        printf("Neispravan unos!\n");
+        printf("Unesite brojeve M i N: ");
+        scanf("%d %d",&m,&n);
+    }
+    printf("Unesite clanove matrice: ");
+    for(i=0;i<m;i++){
+        for(j=0;j<n;j++){
+            scanf("%d",&matrica[i][j]);
+            sumeReda[i]+=matrica[i][j]; // usput racunamo sume redova
+        }
+    }  
+    //racunanje suma kolona 
+    for(i=0;i<n;i++){
+        for(j=0;j<m;j++){
+            sumeKolona[i]+=matrica[j][i];
+        }
+    }
+    //provjera jesu li sume redova jednake
+    for(i=1;i<m;i++) {
+        if (sumeReda[i]!=sumeReda[i-1]) {
+            jednakeSume=0;
+            break;
+        } 
+    }
+    //provjera jesu li sume kolona jednake
+    for(i=1;i<n;i++){
+        if(sumeKolona[i]!=sumeKolona[i-1]){
+            jednakeKolone=0;
+            break;
+        }
+    }
+    //ispisi
+    (jednakeSume) ? printf("DA\n") : printf("NE\n");
+    (jednakeKolone) ? printf("DA\n") : printf("NE\n"); 
+	return 0;
+}
+
+/*
+Napisati program koji provjerava da li su sume svih redova i svih kolona matrice jednake.
+
+Najprije se unose brojevi M i N koji predstavljaju broj redova i broj kolona matrice (ne većih od 100). 
+U slučaju unosa većeg ili negativnog broja tražiti ponovan unos oba broja. Zatim se unose članovi matrice. 
+Program treba ispisati DA ako su sume svih redova matrice jednake, a NE ako nisu. 
+U sljedećem redu treba ispisati DA ako su sume svih kolona jednake, a NE ako nisu.
+
+Primjer ulaza i izlaza:
+
+        
+Unesite brojeve M i N: 50 101
+Neispravan unos!
+Unesite brojeve M i N: 3 3
+Unesite clanove matrice: 1 2 3
+3 2 1
+2 2 2
+DA
+DA
+Napomena: Svi oblici hardcodiranja kao i programi koji uvijek ispisuju istu poruku biće sankcionisani sa 0 bodova.
+*/
