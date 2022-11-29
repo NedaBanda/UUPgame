@@ -1,0 +1,80 @@
+#include <stdio.h>
+
+int main() {
+    int matrica[50][50];
+    int i, j,k, n, nkolona;
+    printf("Unesite dimenziju matrice: ");
+    scanf("%d", &n);
+    if(n<1 || n>50) return 0;
+
+    for(i=0;i<n;i++){
+        printf("\nUnesite elemente %d. reda: ",i+1);
+        for(j=0;j<n;j++){
+            scanf("%d",&matrica[i][j]);
+        }
+    }
+
+    //izbacivanje dijagonale kad je neparan n
+    if(n%2!=0){
+    for(i=0;i<n;i++){
+        for(j=i;j<n-1;j++){
+            matrica[i][j]=matrica[i][j+1];
+        }
+    }
+        nkolona=n-1;   
+    }
+    //izbacivanje glavne i sporedne dijagonale kad je paran n
+    else {
+        for(i=0;i<n;i++){
+            for(j=0;j<n;j++){
+                //glavna dijagonala
+                if(j==i){
+                    for(k=j;k<n-1;k++){
+                        if(k==n-i-2) matrica[i][k] = matrica[i][k+2];
+                        else matrica[i][k]=matrica[i][k+1];
+                    }
+                }
+                //sporedna dijagonala
+                if(j==n-i-1 ){
+                    for(k=j;k<n-1;k++){
+                        if(k==i-1) matrica[i][k]=matrica[i][k+2];
+                        else matrica[i][k]=matrica[i][k+1];
+                    }
+                }
+            }
+        }
+        nkolona=n-2;
+    }
+    printf("\nMatrica nakon izbacivanja dijagonale:\n");
+    for(i=0;i<n;i++){
+        for(j=0;j<nkolona;j++){
+            printf("%-5d",matrica[i][j]);
+        }
+        printf("\n");
+    }
+	return 0;
+}
+
+/*
+Napisati program koji od korisnika zahtijeva unos dimenzije kvadratne matrice cijelih brojeva (dimenzija ne veće od 50), i elemente matrice. 
+Pri tome osigurati da se matrica unese korektno. Program treba iz matrice izbaciti elemente na glavnoj dijagonali ako je n neparno, 
+a ako je parno i sa glavne i sa sporedne dijagonale. Matricu treba modifikovati, a ne samo pri ispisu zanemariti elemente na dijagonali. 
+Elemente matrice poravnati sa lijevom stranom i ostaviti 5 mjesta za ispis svakog broja.
+
+Primjer ulaza i izlaza:
+
+Unesite dimenziju matrice: 5
+Unesite elemente 1. reda: 1 2 3 4 5
+Unesite elemente 2. reda: 6 7 8 9 1
+Unesite elemente 3. reda: 1 2 3 4 5
+Unesite elemente 4. reda: 6 7 8 9 1
+Unesite elemente 5. reda: 1 2 3 4 5
+Matrica nakon izbacivanja dijagonale:
+2    3    4    5
+6    8    9    1
+1    2    4    5
+6    7    8    1
+1    2    3    4
+Napomena: Zadatak obavezno riješiti koristeći matricu.
+
+*/
