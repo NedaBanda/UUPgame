@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+int main() {
+  int matrica[10][10];
+  int i, j, min=0, min2=0, max=0, max2=0, privremeni;
+  // unos elemenata
+  printf("Unesite elemente matrice: ");
+  for (i = 0; i < 10; i++) {
+    for (j = 0; j < 10; j++) {
+      scanf("%d", &matrica[i][j]);
+    }
+  }
+  //trazenje najmanjeg i najveceg(samo nam je bitan red) 
+  for(i=0;i<10;i++){
+      for(j=0;j<10;j++){
+          if(matrica[i][j]<matrica[min][min2]){
+              min=i;
+            min2=j;
+          }
+          if(matrica[i][j]>matrica[max][max2]){
+              max=i;
+              max2=j;
+          }
+      }
+  } 
+    if(min==max) printf("Najmanji i najveci element se nalaze u istom redu.");
+    else{
+        //zamjena redova
+        for(i=0;i<10;i++){
+            privremeni=matrica[min][i];
+            matrica[min][i]=matrica[max][i];
+            matrica[max][i]=privremeni;
+        }
+        //ispis
+        printf("Nakon zamjene matrica glasi:\n");
+        for(i=0;i<10;i++){
+            for(j=0;j<10;j++){
+                printf("%d ",matrica[i][j]);
+            }
+            printf("\n");
+        }
+    }
+    
+
+  return 0;
+}
+/*
+Zadatak
+Napravite program koji učivata matricu cijelih brojeva dimenzija 10x10, a zatim pronalazi red sa najvećim i red sa najmanjim elementom. 
+Ako se oba elementa nalaze u istom redu, program treba ispisati poruku "Najveci i najmanji element se nalaze u istom redu." i završiti s radom.
+U suprotnom, potrebno je zamijeniti mjesta ta dva reda u matrici i ispisati tako modifikovanu matricu na ekranu.
+
+Primjer ulaza i izlaza:
+
+Unesite elemente matrice: 1 2 3 4 ...
+Nakon zamjene matrica glasi:
+1 2 3 4 ...
+Napomena: Zadatak obavezno riješiti koristeći matricu.
+*/
