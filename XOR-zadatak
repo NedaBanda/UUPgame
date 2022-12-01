@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+int main() {
+    int niz[100], noviNiz[100];
+    int n, i, j, x=0,TacnoDN, max=0;
+    //unos dimenzija niza
+    printf("Unesite N: ");
+    scanf("%d",&n);
+    //provjera je li dimenzija dobra
+    while(n<1 || n>100){
+        printf("Greska\n");
+        printf("Unesite n: ");
+        scanf("%d",&n);
+    }
+    //unos elemenata
+    for(i=0;i<n;i++){
+        scanf("%d",&niz[i]);
+        if(max<=niz[i]) max=niz[i];
+    }
+    max*=10; //veci broj ne moze dati tacan rezultat
+    //trazenje
+    for(x=0;x<=max;x++){
+        for(i=0;i<n-1;i++){
+            if((niz[i]^x)<=(niz[i+1]^x)) TacnoDN=1;
+            else {
+                TacnoDN=0;
+                break;
+            }
+        }
+        if(TacnoDN) break;
+    }
+    //ispis
+    if(TacnoDN) printf("X=%d",x);
+    else printf("X=-1");
+
+	return 0;
+}
+
+/*
+Dat je neki niz prirodnih brojeva. Ako na svaki član tog niza primijenimo operaciju binarni XOR (ekskluzivna disjunkcija) 
+sa nekim prirodnim brojem X dobićemo neki drugi niz prirodnih brojeva.
+
+Recimo da niz glasi 4 2 3 1. Ako je X=6 dobićemo niz 2 4 5 7. Objašnjenje
+
+
+Vaš zadatak je da napravite program koji za uneseni niz provjerava da li postoji X takvu da se nakon primjene XOR dobije niz koji 
+je sortiran u rastućem poretku (ali ne strogo rastućem, dakle dozvoljeno je da dva susjedna člana budu jednaka). 
+U prethodnom primjeru za niz 4 2 3 1 postoji takvo X i ono iznosi 6.
+
+Najprije treba unijeti broj članova niza N (ne veći od 100), a zatim unijeti N prirodnih brojeva (nije potrebno provjeravati). 
+Program treba ispisati najmanje X ako postoji, a ako X ne postoji, treba ispisati -1.
+
+Primjer ulaza i izlaza:
+
+       
+Unesite N: 4
+4 2 3 1
+X=6
+*/
