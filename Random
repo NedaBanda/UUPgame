@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+int Random(int a,int b){
+    int broj;
+    broj=rand()%(b-a+1)+a;
+    return broj;
+}
+
+int main() {
+    int a, b;
+    srand((unsigned) time(NULL));
+    scanf("%d %d",&a, &b);
+    printf("%d ",Random(a,b));
+	return 0;
+}
+/*
+Napisati funkciju int Random(int a, int b) koja vraća neki nasumični broj u intervalu [a, b). 
+Za generisanje slučajnih brojeva koristiti rand funkciju iz stdlib.h biblioteke.
+
+Napomena: „pripremanje“ rand funkcije tj. pisanje
+
+                                                                                       srand((unsigned int) time (NULL));
+uraditi u main funkciji ili nekoj funkciji koja koristi Random funkciju, prije njenog poziva. Ne pozivati srand funkciju iz funkcije Random!
+*/
