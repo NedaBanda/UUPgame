@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+void obrni_cifre(int *niz,int brojElem){
+    int i,j, novaVrijednost;
+    for(i=0;i<brojElem;i++){
+        novaVrijednost=0;
+        if(*(niz+i)<0) {
+            *(niz+i)*=-1;
+            for(;*(niz+i)>0;*(niz+i)/=10){
+                novaVrijednost=novaVrijednost*10+*(niz+i)%10;
+            }
+            *(niz+i)=novaVrijednost *(-1);
+        }
+        else{
+            for(;*(niz+i)>0;*(niz+i)/=10){
+                novaVrijednost=novaVrijednost * 10 + (*(niz+i)%10);
+            }
+            *(niz+i)=novaVrijednost;
+        }
+    }
+}
+
+int main() {
+    int niz1[5] = {1,23,321,918,33};
+    obrni_cifre(niz1, 5);
+    int i;
+    for(i=0; i<5; i++) printf("%d ", niz1[i]);
+    return 0;
+}
+/*
+Zadatak
+Napisati funkciju obrni_cifre koja prihvata pokazivač na početak niza i broj elemenata niza a koja svakom elementu niza obrće cifre. 
+Koristiti isključivo pokazivačku aritmetiku. Npr. ako se niz sastoji od elemenata 123, 101, 31, nakon poziva ove funkcije niz treba da sadrži elemente 321, 101, 13.
+
+Napomena: Pri rješavanju zadatka obavezno koristiti pokazivačku aritmetiku! Nije dozvoljena ni trivijalna simulacija indeksiranja izrazima oblika *(niz+i).
+*/
