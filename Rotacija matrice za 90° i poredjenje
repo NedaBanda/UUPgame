@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+int main() {
+    int A[10][10],B[10][10];
+    int mA, nA, mB, nB, i, j,k, jednake=0;
+    do{
+        printf("Unesite sirinu i visinu matrice A: ");
+        scanf("%d %d",&nA,&mA);
+        if(mA<1 || mA>10 || nA<1 || nA>10) printf("Pogresan unos.\n");
+        else break;
+    }while(1);
+    printf("Unesite clanove matrice A: ");
+    for(i=0;i<mA;i++){
+        for(j=0;j<nA;j++){
+            scanf("%d",&A[i][j]);
+        }
+    }
+    do{
+        printf("Unesite sirinu i visinu matrice B: ");
+        scanf("%d %d",&nB,&mB);
+        if(mB<1 || mB>10 || nB>10 || nB<1) printf("Pogresan unos.\n");
+        else break;
+    }while(1);
+    printf("Unesite clanove matrice B: ");
+    for(i=0;i<mB;i++){
+        for(j=0;j<nB;j++){
+            scanf("%d",&B[i][j]);
+        }
+    }
+
+    if(mA==nB && nA==mB){
+        for(i=0;i<mB;i++){
+            for(j=0, k=nB-1;j<nB &&  k>=0;j++,k--){
+                if(A[k][i]==B[i][j]) jednake=1;
+                else {
+                    jednake=0;
+                    break;
+                }
+            }
+        }
+        if(jednake) printf("DA\n");
+        else printf("NE\n");
+    }
+    else printf("NE\n");
+    
+	return 0;
+}
+
+/*
+Napravite program koji omogućuje unos dvije matrice realnih brojeva A i B. 
+Najprije se unose dimenzije matrice A, pa matrica A, pa dimenzije matrice B i konačno članovi matrice B. 
+Program treba ispisati DA ako je matrica B jednaka matrici A zarotiranoj za 90° u smjeru kazaljke na satu, a NE ako nije. 
+
+
+Primjer ulaza i izlaza:
+
+Unesite sirinu i visinu matrice A: 2 2
+Unesite clanove matrice A: 1 2 3 4
+Unesite sirinu i visinu matrice B: 2 2
+Unesite clanove matrice B: 3 1 4 2
+DA
+Napomena: Rješenje koje uvijek ispisuje DA ili NE ili hardcodira rješenja (npr. ako je matrica jednaka nekoj iz autotesta uvijek ispisuje DA ili NE) 
+biće bodovana sa 0 bodova bez obzira na potencijalno ispravne dijelove koda! Zadatak obavezno riješiti koristeći matricu.
+*/
