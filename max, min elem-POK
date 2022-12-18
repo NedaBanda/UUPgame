@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int *max_el(int *p1,int *p2){
+    int *max=p1;
+    for(;p1<p2;p1++){
+        if(*max<*p1) max=p1;
+    }
+    return max;
+}
+int *min_el(int *p1, int *p2){
+    int *min=p1;
+    for(;p1<p2;p1++){
+        if(*min>*p1) min=p1;
+    }
+
+    return min;
+}
+int main() {
+
+    int niz[5]={1,2,3,4,5};
+    printf("%d",*max_el(niz, niz+5));
+	return 0;
+}
+
+/*
+Koristeći isključivo pokazivaču aritmetiku napisati funkciju max_el koja vraća pokazivač na najveći elemenat u nizu. 
+Ako postoji više identičnih (najvećih) elemenata, treba vratiti prvi po redu. Prototip funkcije izgleda ovako:
+
+int *max_el(int *p1, int *p2)
+Paziti da ova funkcija ne vrati „viseći“ pokazivač tj. pokazivač na neku varijablu koja prestaje postojati u funkciji! 
+Funkcija iznad omogućava direktno mijenjanje najvećeg elementa, kao u sljedećim slučajevima:
+
+int niz[7] = {1, 2, 9, 8, 4, 0, 1};
+int *p = max_el(niz, niz + 7); //p pokazuje na max. el.
+*p = 100; //niz: {1, 2, 100, 8, 4, 0, 1}
+//ili direktno:	
+*max_el(niz, niz + 7) = 100; //direktno mijenjamo max. el.
+Također, napisati funkciju min_el koja, slično funkciji max_el, pronalazi minimalan elemenat i vraća pokazivač na njega.
+*/
