@@ -1,0 +1,68 @@
+#include <stdio.h>
+
+char* okreni(char *rijec){
+    int broj=0, i=0;
+    char *p=rijec;
+    char privremena;
+    for(;*p!='\0';p++){
+        broj++;
+    }
+    if(broj%2==0){
+        broj--;
+        while(i<=broj/4){
+            privremena=rijec[i];
+            rijec[i]=rijec[broj/2-i];
+            rijec[broj/2-i]=privremena;
+            i++;
+        }
+        i=0;
+        while(i+1+broj/2<=broj*3/4){
+            privremena=rijec[i+1+broj/2];
+            rijec[i+1+broj/2]=rijec[broj-i];
+            rijec[broj-i]=privremena;
+            i++;
+        }
+        return rijec;
+    }
+    else {
+        broj--;
+        i=0;
+        while(i<=broj/4-1){
+            privremena=rijec[i];
+            rijec[i]=rijec[broj/2-1-i];
+            rijec[broj/2-1-i]=privremena;
+            i++;
+        }
+        i=0;
+        while(i+broj/2+1<broj*3/4){
+            privremena=rijec[i+broj/2+1];
+            rijec[i+broj/2+1]=rijec[broj-i];
+            rijec[broj-i]=privremena;
+            i++;
+        }
+        return rijec;
+    }
+}
+
+
+int main() {
+    char slova[20]="ABCDEFGHnIJKLMNOP";
+    printf("%s",slova);
+    printf("\n%s",okreni(slova));
+    printf("\nHGFEDCBAnPONMLKJI");
+
+	return 0;
+}
+/*
+Potrebno je napisati funkciju okreni koja okreće prvu polovicu i drugu polovicu stringa kao u sljedećim primjerima:
+
+ABCDEF  	postaje		CBAFED
+ABCDEFG	postaje		CBADGFE
+ABCDEFGHIJKLMNOP	postaje		HGFEDCBAPONMLKJI
+Dakle, ukoliko string ima paran broj slova, prva polovica stringa ABC se okreće naopako te postaje CBA, a druga polovica stringa DEF se okreće tako da postaje FED. 
+Ukoliko string ima neparan broj slova, slovo u sredini (D u drugom primjeru) ostaje na svom mjestu, a dijelovi ispred (ABC) i iza (EFG) sredine 
+se okreću pa se dobija: CBA D GFE (bez razmaka). Radi lakšeg lančanog pozivanja funkcija treba vraćati pokazivač na prvo slovo stringa.
+
+Napomena: Pri rješavanju zadatka nije dozvoljeno koristiti funkcije iz biblioteka string.h, stdlib.h kao ni funkcije sprintf i sscanf iz biblioteke stdio.h.
+Nije dozvoljeno kreirati pomoćne stringove u funkciji ili globalno. No dozvoljeno je kreirati histogram, jer je njegova veličina fiksna i unaprijed poznata.
+*/
