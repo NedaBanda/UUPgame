@@ -9,14 +9,14 @@ char* okreni(char *rijec){
     }
     if(broj%2==0){
         broj--;
-        while(i<=broj/4){
+        while(i<=broj/4 && rijec[broj/2-i]!='\0' && broj/2-i>=0){
             privremena=rijec[i];
             rijec[i]=rijec[broj/2-i];
             rijec[broj/2-i]=privremena;
             i++;
         }
         i=0;
-        while(i+1+broj/2<=broj*3/4){
+        while(i+1+broj/2<=broj*3/4 && rijec[i+1+broj/2]!='\0' && rijec[broj-i]!='\0' && broj-i>=0){
             privremena=rijec[i+1+broj/2];
             rijec[i+1+broj/2]=rijec[broj-i];
             rijec[broj-i]=privremena;
@@ -26,15 +26,16 @@ char* okreni(char *rijec){
     }
     else {
         broj--;
+        if(!broj) return rijec;
         i=0;
-        while(i<=broj/4-1){
+        while(i<=broj/4 && rijec[broj/2-1-i]!='\0' && broj/2-1-i>=0){
             privremena=rijec[i];
             rijec[i]=rijec[broj/2-1-i];
             rijec[broj/2-1-i]=privremena;
             i++;
         }
         i=0;
-        while(i+broj/2+1<broj*3/4){
+        while(i+broj/2+1<=broj*3/4 && rijec[broj/2+1+i]!='\0' && rijec[broj-i]!='\0' && broj-i>=0){
             privremena=rijec[i+broj/2+1];
             rijec[i+broj/2+1]=rijec[broj-i];
             rijec[broj-i]=privremena;
@@ -46,13 +47,13 @@ char* okreni(char *rijec){
 
 
 int main() {
-    char slova[20]="ABCDEFGHnIJKLMNOP";
+    char slova[20]="C";
     printf("%s",slova);
     printf("\n%s",okreni(slova));
-    printf("\nHGFEDCBAnPONMLKJI");
 
 	return 0;
 }
+
 /*
 Potrebno je napisati funkciju okreni koja okreće prvu polovicu i drugu polovicu stringa kao u sljedećim primjerima:
 
