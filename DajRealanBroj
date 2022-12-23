@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <math.h>
+long double DajRealanBroj(const char *s){
+    long double broj=0, cifra=0;
+    int decimalni=0;
+    const char* pocetak=s;
+    while(*s!='\0'){
+        
+        if((*s>=65 && *s<=90) || (*s>=97 && *s<=122)){
+            cifra++;
+            s++;
+        }
+        else if(s==pocetak) s++;
+        else if ((*(s-1)>=65 && *(s-1)<=90) || (*(s-1)>=97 && *(s-1)<=122)) {
+            broj+=cifra*pow(10, decimalni--);
+            cifra=0;
+            s++;
+        }
+        else s++;
+    }
+    if(s==pocetak) return broj;
+    else if((*(s-1)>=65 &&*(s-1)<=90) || (*(s-1)>=97 && *(s-1)<=122)){
+        broj+=cifra*pow(10, decimalni--);
+        cifra=0;
+        s++;
+    }
+    return broj;
+}
+void unesi(char niz[], int velicina){
+    char znak =getchar();
+    if(znak=='\n') znak =getchar();
+    int i=0;
+    while(i<velicina-1 && znak !='\n'){
+        niz[i]=znak;
+        i++;
+        znak=getchar();
+    }
+    niz[i]='\0';
+}
+
+int main() {
+    char recenica[100];
+    printf("Unesite text: ");
+    unesi(recenica,50);
+    printf("Dobijeni realni broj je: %.12Lf",DajRealanBroj(recenica));
+	return 0;
+}
+/*
+Zadatak
+Potrebno je napisati funkciju double DajRealanBroj(const char *s), koja će vratiti realni broj u zavisnosti od prosljeđenog stringa. 
+Broj karaktera prve riječi određuje cifru cijelog dijela realnog broja, dok broj karaktera ostalih riječi određuje cifre poslije decimalnog separatora. 
+Riječ se definiše kao neprekinut niz velikih i malih slova tako da se npr. string "Auto-Stop" smatra za dvije riječi. Potrebno je napisati i main funkciju,
+broj treba ispisivati zaokruzen na 12 decimala.
+
+image
+
+Primjer ulaza/izlaza:
+
+  Unesite text: Ovo je prvi text za ovu funkciju
+  Dobijeni realni broj je: 3.244238
+U zadatku je strogo zabranjeno korištenje pomoćnih stringova i biblioteke string.h, te zadaci koji budu koristili iste bit će bodovani sa 0 bodova!
+
+
+Testovi koje ne prolazi:
+!OVAJtest,je   super,i !Nadam se   da     Prolazi.!c-1a/lk#r+k& 
+9ovaj text#je$$%mnogo bitan za    auto test;l.Ovo su,dodatni znakovi 6
+*/
