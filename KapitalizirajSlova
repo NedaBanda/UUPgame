@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+void unesi (char* niz, int vel) {
+    int i=0;
+    char z=getchar();
+    if (z=='\n') {z=getchar();}
+    while (z!='\n' && i<vel-1) {
+        niz[i]=z;
+        i++;
+        z=getchar();
+    }
+    niz[i]='\0';
+}
+
+char* velika(char *s){
+    char * p=s;
+    while(*p!='\0'){
+        if(*p>=97 && *p<=122){
+            *p-=32;
+        }
+        p++;
+    }
+    return s;
+}
+
+int main() {
+    char tekst[100];
+    printf("Unesite neki tekst: ");
+    unesi(tekst, 100);
+    printf("Velikim slovima: %s\n", velika(tekst));
+    return 0;
+}
+
+/*
+Zadatak
+Napišite funkciju sa prototipom:
+
+char* velika(char *s);
+koja u primljenom stringu sva mala slova pretvara u velika. Funkcija treba da vraća pokazivač na početak istog stringa koji je proslijeđen funkciji kao parametar. 
+Ovo omogućuje da se funkcija poziva lančano, npr. možete pisati:
+
+char s[] = "Ovo je primjer.";
+printf("%s", velika(s));
+Napravite kraći testni program u kojem demonstrirate rad ove funkcije. Primjer ulaza i izlaza:
+
+
+Unesite neki tekst: Ovo je primjer.
+OVO JE PRIMJER.
+Napomena: Nije dozvoljeno kreirati pomoćne stringove u funkciji ili globalno.
+*/
