@@ -1,0 +1,67 @@
+#include <stdio.h>
+
+int prebrojBanane(const char *s) {
+  int slova[3] = {0}, VelikoSlovo = 0, i = 0, min = 0;
+  while (*s != '\0') {
+    switch (*s) {
+    case 'a':
+      slova[0]++;
+      break;
+    case 'A':
+      slova[0]++;
+      VelikoSlovo++;
+      break;
+    case 'b':
+      slova[1]++;
+      break;
+    case 'B':
+      slova[1]++;
+      VelikoSlovo++;
+      break;
+      ;
+    case 'n':
+      slova[2]++;
+      break;
+      ;
+    case 'N':
+      slova[2]++;
+      VelikoSlovo++;
+      break;
+    }
+    s++;
+  }
+  slova[0] /= 3;
+  slova[2] /= 2;
+  min=slova[0];
+  while (i < 3) {
+    if (min > slova[i]) {
+      min = slova[i];
+    }
+    i++;
+  }
+  if (min < VelikoSlovo)
+    return min;
+  else
+    return VelikoSlovo;
+}
+
+int main() {
+  char rijec[20] = "Banana";
+  printf("%d", prebrojBanane(rijec));
+
+  return 0;
+}
+
+/*
+Zadatak
+Napisati funkciju int prebrojBanane(const char * s) koja prima string kao parametar, a vraća broj banana koje se mogu konstruisati od datog teksta(stringa).
+
+Jedna banana se može konstruisati iz sljedećeg stringa: "Banana". Pravilo za konstrukciju banane glasi: 
+"Ukoliko postoji jedno slovo B, tri slova A i dva slova N, a barem jedno od njih je veliko, onda je moguće konstruisati jednu bananu."
+
+String	Rezultat
+ban..an_A	1
+ban..an_a	0
+bn..An_a	0
+BBBananaaaannaaan_n	3
+*/
