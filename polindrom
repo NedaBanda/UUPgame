@@ -1,0 +1,52 @@
+#include <ctype.h>
+#include <stdio.h>
+int je_li_palindrom(const char *str) {
+  int broj = 0, prazan = 0;
+  const char *p = str;
+  const char *kraj;
+  while (*p != '\0') {
+    broj++;
+    p++;
+  }
+  if(!broj) return 0;
+  p = str;
+  kraj = str + (broj - 1);
+  while (p < str + broj) {
+    if (isalnum(*p) && isalnum(*kraj)) {
+      if (tolower(*p) != tolower(*kraj)) {
+        return 0;
+      } else {
+        p++;
+        kraj--;
+      }
+    }
+    else prazan++;
+    if (!isalnum(*p))
+      p++;
+    if (!isalnum(*kraj))
+      kraj--;
+  }
+    if(prazan==broj) return 0;
+  return 1;
+}
+
+int main() {
+  char rijec[50] = "    ";
+  printf("%d", je_li_palindrom(rijec));
+
+  return 0;
+}
+
+/*
+Zadatak
+Napisati funkciju int je_li_palindrom(const char* str) koja ispituje da li je proslijeđeni string palindrom te vraća 1 ako jeste, odnosno 0 ako nije.
+U funkciji je zabranjeno korištenje indekisranja stringa (p[i]) kao i trivijalne simulacije indeksiranja pomoću *(p + i). 
+Pri tome ignorirati sve znakove koji nisu slova i brojevi. Također, ignorirati velika i mala slova. Primjeri:
+
+
+printf ("%d", je_li_palindrom("Kapak")); //1
+printf ("%d", je_li_palindrom("k a   p  a  k   ")); //1
+printf ("%d", je_li_palindrom("ka p a  ak")); //0
+printf ("%d", je_li_palindrom("Ana voli... Milovana!")); //1
+Napomena: Nije dozvoljeno kreirati pomoćne stringove u funkciji ili globalno.
+*/
