@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+void popuni(int matrica[100][100], int m){
+    int i=0, broj=1;
+    int lijevo=0, desno=m-1, dole=m-1, gore=0;
+    while(lijevo<=desno && dole>=gore){
+        for(i=desno;i>=lijevo;i--){
+            matrica[dole][i]=broj++;
+        }
+        dole--;
+        for(i=dole;i>=gore;i--){
+            matrica[i][lijevo]=broj++;
+        }
+        lijevo++;
+        for(i=lijevo;i<=desno;i++){
+            matrica[gore][i]=broj++;
+        }
+        gore++;
+        for(i=gore;i<=dole;i++){
+            matrica[i][desno]=broj++;
+        }
+        desno--;
+    }
+}
+
+int main() {
+    int matrica[100][100],m=5;
+    popuni(matrica, m);
+    int i,j;
+    for(i=0;i<m;i++){
+        for(j=0;j<m;j++){
+            printf("%4d",matrica[i][j]);
+        }
+        printf("\n");
+    }
+	return 0;
+}
+
+/*
+Napisati funkciju popuni koja prima matricu cijelih brojeva deklarisanih dimenzija 100x100 te cijeli broj M koji predstavlja stvarnu širinu i visinu matrice. 
+Funkcija treba popuniti matricu brojevima na sljedeći način. U donjem desnom uglu se nalazi broj 1, a zatim se matrica popunjava redom brojevima 2, 3, 4 itd. 
+tako da se najprije popunjavaju brojevi prema lijevo, zatim gore, zatim prema desno, pa dole, pa opet lijevo itd. u obliku spirale dok se ne dođe do centra. 
+*/
