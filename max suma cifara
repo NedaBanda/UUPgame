@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int sumacifri(int a){
+    int suma=0;
+    if(a<0) a*=-1;
+    for(;a;a/=10){
+        suma=suma+(a%10);
+    }
+    return suma;
+}
+
+int maxsuma(int const *niz,int vel){
+    if(!vel) return 0;
+    int max=sumacifri(niz[0]);
+    int i=0,indeks=0;
+    while(i<vel){
+        if(max<sumacifri(niz[i])) {
+            max=sumacifri(niz[i]);
+            indeks=i;
+        }
+        i++;
+        
+
+    }
+    return niz[indeks];
+}
+
+int main() {
+    int niz[10]={1,2,3,55,4,4,3,34,33,3,};
+    printf("%d",maxsuma(niz,10));
+
+	return 0;
+}
+/*
+Napisati funkciju sa prototipom:
+
+int maxsuma(int* niz, int vel)
+koja prima niz cijelih brojeva, a vraća član niza koji ima najveću sumu cifara. Ako je broj negativan, suma cifara je pozitivna. 
+Ukoliko više članova niza ima istu sumu cifara, funkcija treba vratiti onaj od članova sa najvećom sumom cifara koji je prvi po redu. 
+Ukoliko je niz prazan funkcija treba vratiti nulu.
+*/
