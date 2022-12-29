@@ -1,0 +1,84 @@
+#include <stdio.h>
+
+int duzina_niza(const int *pocetak, const int *kraj){
+    int broj=0;
+    while(pocetak<kraj){
+        broj++;
+        pocetak++;
+    }
+    return broj;
+}   
+
+int podniz(const int *p1, const int *p2, const int *q1, const int *q2) {
+  int brojac = 0, imaDN = 0, pozicija;
+  int kraj = 0;
+  const int *pok1 = p1;
+  const int *pok2 = q1;
+  while (*q1 != *pok1 && pok1 < p2) {
+    pok1++;
+    brojac++;
+  }
+  int broj=duzina_niza(p1, p2);
+  
+  pozicija = brojac;
+  while (pok1 < p2 && pok2 < q2) {
+    if (*pok1 != *pok2) {
+      imaDN = 0;
+      pok2 = q1;
+      while (*pok1 != *q1 && pok1 < p2 ) {
+        brojac++;
+        if(brojac==broj){
+            kraj=1;
+            break;
+        }
+        pok1++;
+      }
+      pozicija = brojac;
+    } else {
+      imaDN = 1;
+      brojac++;
+       if(brojac==broj){
+            kraj=1;
+            break;
+        }
+      pok1++;
+      pok2++;
+    }
+    if(kraj) break;
+  } 
+
+  if (imaDN)
+    return pozicija;
+  else
+    return -1;
+}
+
+int main() {
+  int niz[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  int niz2[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 9};
+  printf("%d", podniz(niz, niz + 10, niz2, niz2 + 10));
+  return 0;
+}
+
+/*
+Zadatak
+Koristeći isključivo pokazivačku aritmetiku, napisati funkciju
+
+int podniz (const int *p1, const int *p2, const int *q1, const int *q2)
+koja provjerava da li se niz omeđen sa pokazivačima q1 i q2 (q1 pokazuje na prvi element, a q2 tačno iza zadnjeg) 
+nalazi unutar niza omeđenog pokazivačima p1 i p2 (p1 pokazuje na početak, a p2 tačno iza kraja niza).
+
+Funkcija treba da vrati indeks prvog elementa prvog niza na kojem počinje drugi podniz odnosno -1 
+ukoliko prvi niz ne sadrži drugi niz unutar sebe. Ukoliko ima više podnizova, treba vratiti indeks prvog. Primjeri radi boljeg razumijevanja:
+
+Niz1 = {1, 2, 3, 4, 5, 6, 7}; Niz2 = {2, 3, 4};
+Funkcija treba da vrati 1 jer Niz1 sadrži Niz2 i to počevši od 2. elementa (sa indeksom 1).
+
+Niz1 = {1, 2, 3, 4, 5, 6, 7}; Niz2 = {3, 4, 5};
+Funkcija treba da vrati 2 jer Niz2 počinje od 3. elementa niza Niz1.
+
+Niz1 = {1, 2, 3, 4, 5, 6, 7}; Niz2 = {2, 0, 4};
+Funkcija treba da vrati -1 jer Niz2 nije podniz niza Niz1.
+
+Napomena: Pri rješavanju zadatka obavezno koristiti pokazivačku aritmetiku! Nije dozvoljena ni trivijalna simulacija indeksiranja izrazima oblika *(niz+i).
+*/
