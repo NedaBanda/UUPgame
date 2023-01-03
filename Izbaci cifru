@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+int main() {
+  int cifrePonavljanje[10] = {0};
+  int niz[100], n, i, j, noviBroj = 0, MaxCifra, broj, negativan = 0;
+
+  printf("Unesite broj clanova niza: ");
+  scanf("%d", &n);
+  printf("Unesite niz: ");
+  for (i = 0; i < n; i++) {
+    scanf("%d", &niz[i]);
+  }
+
+  for (i = 0; i < n; i++) {
+    if (niz[i] < 0) {
+      broj = niz[i] * (-1);
+    } else
+      broj = niz[i];
+    if(!broj) cifrePonavljanje[0]++;
+    for (; broj > 0; broj /= 10) {
+      cifrePonavljanje[broj % 10]++;
+    }
+  }
+  MaxCifra = 0;
+  for (i = 0; i < 10; i++) {
+    if (cifrePonavljanje[MaxCifra] < cifrePonavljanje[i])
+      MaxCifra = i;
+  }
+  for (i = 0; i < n; i++) {
+    if (niz[i] < 0) {
+      broj = niz[i] * (-1);
+    } else
+      broj = niz[i];
+    for (; broj > 0;) {
+      if (broj % 10 != MaxCifra) {
+        noviBroj = noviBroj * 10 + broj % 10;
+        broj /= 10;
+      } else
+        broj /= 10;
+    }
+    for (; noviBroj > 0; noviBroj /= 10) {
+      broj = broj * 10 + noviBroj % 10;
+    }
+    if (niz[i] < 0) {
+      niz[i] = broj * (-1);
+    } else
+      niz[i] = broj;
+  }
+
+  printf("Nakon izbacivanja niz glasi:\n");
+  for (i = 0; i < n; i++) {
+    printf("%d ", niz[i]);
+  }
+  return 0;
+}
+
+/*
+Zadatak
+Napisati program koji omogućuje unos niza cijelih brojeva, pronalazi cifru koja se pojavljuje najviše puta u svim unesenim brojevima,
+te je izbacuje iz članova niza. Ako se više cifara javlja jednak broj puta, treba izbaciti najmanju od njih. Ako su izbačene sve cifre nekog člana niza, 
+taj član treba postati nula. Na kraju se ispisuje tako modificiran niz.
+
+Primjer ulaza i izlaza:
+
+        
+Unesite broj clanova niza: 5
+Unesite niz: 3833 8818 23 33 1288
+Nakon izbacivanja niz glasi:
+8 8818 2 0 1288
+Objašnjenje: Cifre 3 i 8 se javljaju jednak broj puta (po 6 puta), ali 3 je manja pa smo nju izbacili iz svih članova niza. 
+Član 33 se sastoji isključivo od izbačenih cifara 3, tako da on postaje 0.
+*/
