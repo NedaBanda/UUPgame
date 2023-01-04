@@ -1,0 +1,75 @@
+#include <stdio.h>
+
+int izbaci_max_vece(double *niz, int n) {
+  double *pok = niz, *pok2 = niz;
+  double najveci = *niz,poredjenje;
+  int brojac = 0, max = -1;
+  // trazimo najveci(koji se ponavlja najvise puta)
+  while (pok < niz + n) {
+    brojac = 0;
+    pok2 = niz;
+    while (pok2 < niz + n) {
+        poredjenje=*pok2-*pok;
+        if(poredjenje<0)poredjenje*=-1;
+      if (poredjenje< 0.00001) {
+        brojac++;
+      }
+      if (pok2 + 1 == niz + n)
+        break;
+      pok2++;
+    }
+    if (brojac > max) {
+      max = brojac;
+      najveci = *pok;
+    } else if (brojac == max) {
+      if (najveci > *pok) {
+        najveci = *pok;
+      }
+    }
+    if (pok + 1 == niz + n)
+      break;
+    pok++;
+  }
+  //izbacivanje clanova 
+    pok=niz+n-1;
+    while(pok>=niz){
+        if(*pok>najveci){
+            if(pok==niz+n-1) n--;
+            else {
+                pok2=pok;
+                while(pok2<niz+n-1){
+                    *pok2=*(pok2+1);
+                    if(pok2+1==niz+n-1) break;
+                    pok2++;
+                }
+                n--;
+            }
+        }
+        if(pok==niz) break;
+        pok--;
+    }
+  return n;
+}
+
+int main() {
+  double niz[] = {5.2, -10.1, 8.3, -140, 2.1, 5.2, -4, -21.1, -10.1};
+  int vel = izbaci_max_vece(niz, 9);
+  int i;
+  for (i = 0; i < vel; i++)
+    printf("%g ", niz[i]);
+  return 0;
+}
+
+/*
+Zadatak
+Napisati funkciju izbaci_max_vece koja prima niz realnih brojeva (tipa double), pronalazi u njemu član koji se ponavlja najviše puta, 
+a zatim iz niza izbacuje sve članove koji su veći od njega (bez promjene redoslijeda). Ako se više članova ponavlja isti broj puta, treba koristiti najmanji od njih.
+
+Primjer: ako niz glasi:
+5.2 -10.1 8.3 -140 2.1 5.2 -4 -21.1 -10.1
+Članovi niza 5.2 i -10.1 se ponavljaju jednak broj puta (po dva puta), ali -10.1 je manji. Nakon izbacivanja niz glasi:
+-10.1 -140 -21.1 -10.1
+
+Napomena: U zadatku je strogo zabranjeno koristiti pomoćne nizove tj. deklarisati bilo kakav niz osim niza deklarisanog u main funkciji! 
+Rješenje u kojem budu korišteni pomoćni nizovi će biti bodovano sa 0 bodova!
+*/
