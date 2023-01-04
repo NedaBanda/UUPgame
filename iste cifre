@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+int iste_cifre(int a, int b){
+    int cifreA[10]={0}, cifreB[10]={0}, i;
+    if(a<0) a*=-1;
+    for(;a>0;a/=10){
+        cifreA[a%10]++;
+    }
+    if(b<0)b*=-1;
+    for(;b>0;b/=10){
+        cifreB[b%10]++;
+    }
+    for(i=0;i<10;i++){
+        if(cifreB[i]==0 && cifreA[i]==0) continue;
+        else if(cifreA[i]>0 && cifreB[i]>0) continue;
+        else return 0;
+    }
+    return 1;
+
+}
+
+
+int main() {
+    int a,b;
+    printf("Unesite broj a: ");
+    scanf("%d",&a);
+    printf("Unesite broj b: ");
+    scanf("%d",&b);
+	if(iste_cifre(a, b))
+    printf("Brojevi a i b se sastoje od istih cifara.");
+	return 0;
+}
+/*
+Zadatak
+Napisati funkciju čiji je prototip:
+
+	int iste_cifre(int a, int b)
+Funkcija vraća logičku istinu (1) ako su brojevi a i b sastavljeni od istih cifara, a logičku neistinu (0) ako nisu. 
+Predznak zanemarite. Napravite i kraću main funkciju pomoću koje možete testirati ispravnost funkcije iste_cifre.
+
+Primjeri:
+Ako je a=4423 i b=2433 funkcija treba vratiti 1 jer se ovi brojevi sastoje od istih cifara (2, 3, 4).
+Ako je a=4423 i b=322 funkcija treba vratiti 0 jer se u broju b ne nalazi cifra 4 koja se nalazi u broju a.
+
+Napisati i kraću main funkciju koja omogućuje testiranje napisane funkcije iste_cifre. Primjer ulaza i izlaza:
+
+Unesite broj a: 4423
+Unesite broj b: 2433
+Brojevi a i b se sastoje od istih cifara.
+*/
