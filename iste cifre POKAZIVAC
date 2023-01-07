@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <math.h>
+int *istecifre(int *niz,int vel,int *p){
+    int *pok=niz;
+    int cifreP[10]={0},cifreN[10]={0};
+    int broj=*p,i=0;
+    int*odgovarajuciBroj=NULL;
+    for(;broj>0;broj/=10){
+        cifreP[broj%10]++;
+    }
+
+    while(pok<niz+vel){
+        if(pok==p) {
+            if(pok+1==niz+vel) break;
+            pok++;
+            continue;
+        }
+        broj=*pok;
+        for(i=0;i<10;i++)cifreN[i]=0;
+        for(;broj>0;broj/=10){
+            cifreN[broj%10]++;
+        }
+        for(i=0;i<10;i++){
+            if(cifreN[i]!=cifreP[i])break;
+        }
+        if(i==10){
+            if(odgovarajuciBroj==NULL)odgovarajuciBroj=pok;
+            else if(fabs((double)(pok-p))<fabs((double)(odgovarajuciBroj-p)) && (int)(pok-p)>0)odgovarajuciBroj=pok;
+        }
+        if(pok+1==niz+vel) break;
+        pok++;
+    }   
+    if(odgovarajuciBroj==NULL)  return p;
+    else return odgovarajuciBroj;
+}
+
+
+
+int main() {
+    int niz[10]={1515,113,114,441,414,1414,415,554,141,224};
+    printf("%d",*istecifre(niz, 10, niz+2));
+
+
+	return 0;
+}
+
+/*
+Zadatak
+Napisati funkciju sa sljedećim prototipom:
+
+int* istecifre(int* niz, int vel, int* p)
+Prva dva parametra funkcije opisuju niz cijelih brojeva (pokazivač na prvi element i veličina niza), 
+dok je treći parametar p pokazivač na neki element tog niza. Funkcija treba vratiti pokazivač na onaj član niza koji ima iste 
+cifre u istom broju kao element na koji pokazuje pokazivač p. 
+Tako npr. ako p pokazuje na broj 411, funkcija može vratiti pokazivač na neki drugi član niza čija je vrijednost također 411, a može vratiti i 
+pokazivače na 141 ili 114, ali ne treba vratiti pokazivač na 14, 441, 4141 (iste cifre, ali ne isti broj tih cifara), 321 (ista suma cifara ali nisu iste cifre) itd..
+
+Ako se u nizu nalazi više elemenata koji zadovoljavaju uslov zadatka, funkcija treba vratiti pokazivač na prvi takav element 
+koji se nalazi nakon elementa na koji pokazuje p. Ako do kraja niza nema odgovarajućih elemenata, ali ih ima prije pokazivača p, 
+onda funkcija treba vratiti pokazivač na prvi odgovarajući element od početka niza. Konačno, ako se u nizu ne nalazi niti jedan element
+koji zadovoljava uslove zadatka, funkcija treba vratiti primljeni pokazivač p.
+
+Pretpostavite da p pokazuje na član niza (ne morate to provjeravati).
+*/
