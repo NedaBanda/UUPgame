@@ -1,0 +1,58 @@
+#include <stdio.h>
+
+struct Razlomak{
+    int brojnik,nazivnik;
+};
+int NajveciZajednickiDjelilac(int a, int b){
+    if(b==0){
+        return a;
+    }
+    return NajveciZajednickiDjelilac(b, a%b);
+}
+
+struct Razlomak SaberiRazlomke(struct Razlomak r1, struct Razlomak r2){
+    struct Razlomak rezultat;
+    int nzd;
+    rezultat.nazivnik=r1.nazivnik*r2.nazivnik;
+    rezultat.brojnik=(r1.brojnik*r2.nazivnik)+(r2.brojnik*r1.nazivnik);
+    nzd=NajveciZajednickiDjelilac(rezultat.brojnik, rezultat.nazivnik);
+    rezultat.brojnik/=nzd;
+    rezultat.nazivnik/=nzd;
+    return rezultat;
+}
+
+struct Razlomak PomnoziRazlomke(struct Razlomak r1, struct Razlomak r2){
+    struct Razlomak rezultat;
+    int nzd;
+    rezultat.brojnik=r1.brojnik*r2.brojnik;
+    rezultat.nazivnik=r1.nazivnik*r2.nazivnik;
+    nzd=NajveciZajednickiDjelilac(rezultat.brojnik, rezultat.nazivnik);
+    rezultat.brojnik/=nzd;
+    rezultat.nazivnik/=nzd;
+    return rezultat;
+}
+
+int main() {
+    struct Razlomak r1,r2,rez1,rez2;
+    r1.brojnik=3, r1.nazivnik=5;
+    r2.brojnik=7,r2.nazivnik=8;
+    rez1=SaberiRazlomke(r1, r2); 
+    printf("%d/%d\n",rez1.brojnik,rez1.nazivnik);
+    rez2=PomnoziRazlomke( r1,  r2);
+    printf("%d/%d\n",rez2.brojnik,rez2.nazivnik);
+	return 0;
+}
+
+/*
+Zadatak
+Data je struktura:
+
+	struct Razlomak {
+		int brojnik, nazivnik;
+	};
+Potrebno je napisati funkciju
+struct Razlomak SaberiRazlomke(struct Razlomak r1, struct Razlomak r2) i funkciju
+struct Razlomak PomnoziRazlomke(struct Razlomak r1, struct Razlomak r2) koje će obaviti računske operacije sabiranja i množenja dva razlomka, 
+koji su poslani kao argumenti, te kao rezultat vratiti dobijeni razlomak. Razlomak u rezultatu je potrebno maksimalno skratiti. 
+Potrebno je napisati i testni kod u mainu.
+*/
