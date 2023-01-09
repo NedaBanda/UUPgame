@@ -1,0 +1,88 @@
+#include <stdio.h>
+struct Kurs {
+  char valuta[50];
+  float vrijednost;
+};
+
+int dva_stringa(char *p1, char *p2) {
+  int i = 0;
+  while (p1[i] == p2[i]) {
+    if (p1[i] == '\0' || p2[i] == '\0')
+      break;
+    i++;
+  }
+  if (p1[i] == '\0' && p2[i] == '\0')
+    return 1;
+  else
+    return 0;
+}
+
+float razmjena(struct Kurs *p, int vel, char *valuta, float iznos) {
+  if (!vel)
+    return 0;
+  float KM = 0;
+  struct Kurs *pok = p;
+  while (pok < p + vel) {
+    if (dva_stringa(pok->valuta, valuta)) {
+      KM = iznos * pok->vrijednost;
+      break;
+    }
+    if (pok + 1 == p + vel)
+      break;
+    pok++;
+  }
+  return KM;
+}
+void unesi(char niz[], int velicina) {
+  char znak = getchar();
+  if (znak == '\n')
+    znak = getchar();
+  int i = 0;
+  while (i < velicina - 1 && znak != '\n') {
+    niz[i] = znak;
+    i++;
+    znak = getchar();
+  }
+  niz[i] = '\0';
+}
+
+int main() {
+  struct Kurs kursevi[100];
+  int i = 0;
+  char valuta[5];
+  float iznos;
+  printf("Unos kursne liste(Za prestanak 0):\n");
+  do {
+    printf("Valuta: ");
+    unesi(kursevi->valuta, 5);
+    if (kursevi->valuta[0] == '0')
+      break;
+    printf("Vrijednost: ");
+    scanf("%f", &kursevi[i].vrijednost);
+    i++;
+  } while (i < 100);
+
+  printf("Unesite valutu: ");
+  unesi(valuta, 5);
+  printf("Unesite iznos: ");
+  scanf("%f", &iznos);
+  printf("U KM: %f", razmjena(kursevi, i, valuta, iznos));
+  return 0;
+}
+
+/*
+Zadatak
+Data je struktura koja opisuje trenutni kurs neke valute u kursnoj listi (koliko KM ćete dobiti za jednu jedinicu te valute).
+
+struct Kurs {
+    char valuta[5];
+    float vrijednost;
+};
+Npr. trenutni kurs za valutu EUR je 1.955830 KM, pa struktura za tu valutu sadrži vrijednosti "EUR" i 1.95583.
+
+Napisati funkciju razmjena koja prima kursnu listu (niz proizvoljne dužine čiji su članovi tipa struct Kurs), jedan string koji označava valutu (npr. "EUR") 
+i iznos novca u toj valuti, a vraća iznos u KMovima. U gornjem primjeru, ako bismo poslali iznos 2, funkcija bi trebala vratiti 3.91166.
+Ako se valuta ne nalazi u nizu treba vratiti 0.
+
+Obavezno napisati i main funkciju koja omogućuje: unos kursne liste, zatim unos valute i iznosa, poziv funkcije i na kraju ispis rezultata konverzije.
+*/
