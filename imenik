@@ -1,0 +1,90 @@
+#include <stdio.h>
+
+struct Osoba {
+    char ime[15];
+    char prezime[20];
+    int telefon;
+};
+
+void unesi(char *niz,int velicina){
+    char znak=getchar();
+    if(znak=='\n') znak=getchar();
+    int i=0;
+    while(i<velicina-1 && znak!='\n'){
+        niz[i]=znak;
+        i++;
+        znak=getchar();
+    }
+    niz[i]='\0';
+}
+
+struct Osoba unos_osobe() {
+    struct Osoba unos;
+        printf("Unesite ime: ");
+        unesi(unos.ime,15);
+        printf("Unesite prezime: ");
+        unesi(unos.prezime, 20);
+        printf("Unesite broj telefona: ");
+        scanf("%d",&unos.telefon);
+    return unos;
+}
+
+void ispis_osobe(struct Osoba ispis){
+            printf("%s %s, Tel: %d\n",ispis.ime,ispis.prezime,ispis.telefon);  
+    
+}
+
+int main() {
+    struct Osoba imenik[100];
+    int brojLjudi=0,odabir,i=0;
+    do{
+        printf("Pritisnite 1 za unos, 2 za ispis, 0 za izlaz: ");
+        scanf("%d",&odabir);
+        if(odabir==1){
+            if(brojLjudi==100) printf("Kapak, ne moze vise");
+            else{
+                imenik[brojLjudi]=unos_osobe();
+                brojLjudi++;
+            }
+        }
+        else if(odabir==2){
+            i=0;
+            while(i<brojLjudi){
+                printf("\n%d. ",i+1);
+                ispis_osobe(imenik[i]);
+                i++;
+            }
+        }
+        
+               
+    }while(odabir);
+
+	return 0;
+}
+/*
+Zadatak
+Data je sljedeća struktura podataka:
+
+struct Osoba {
+	char ime[15];
+	char prezime[20];
+	int telefon;
+};
+Napravite program koji sadrži niz od 100 osoba:
+
+struct Osoba imenik[100];
+te omogućuje unos osobe ili ispis do sada unesenih osoba. Primjer ulaza i izlaza:
+
+Pritisnite 1 za unos, 2 za ispis, 0 za izlaz: 1
+Unesite ime: Meho
+Unesite prezime: Mehic
+Unesite broj telefona: 123456
+Pritisnite 1 za unos, 2 za ispis, 0 za izlaz: 2
+1. Meho Mehic, Tel: 123456
+Pritisnite 1 za unos, 2 za ispis, 0 za izlaz: 0
+Program treba sadržavati funkcije:
+
+unos_osobe
+ispis_osobe
+Niz ne smije biti deklarisan kao globalna promjenljiva nego treba biti lokalan za funkciju main.
+*/
