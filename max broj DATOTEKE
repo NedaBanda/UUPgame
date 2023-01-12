@@ -1,0 +1,84 @@
+#include <ctype.h>
+#include <stdio.h>
+
+int main() {
+  FILE *ulaz;
+  FILE *izlaz;
+  char c;
+  int broj = 0, max,dodijeljenMax=0, neg = 1, brojDN = 0;
+  long poz;
+  ulaz = fopen("zadatak.txt", "r");
+  if (ulaz == NULL) {
+    printf("greska");
+    return 1;
+  }
+  izlaz = fopen("rjesenje.txt", "w");
+  if (izlaz == NULL) {
+    printf("Greska");
+    return 2;
+  }
+  do {
+    c = getc(ulaz);
+    if (isdigit(c))
+      break;
+    else if (c == EOF)
+      break;
+  } while (1);
+  if (c == EOF) {
+    fprintf(izlaz, "0");
+  } else {
+    poz = ftell(ulaz);
+    fseek(ulaz, 0, SEEK_SET);
+    do {
+      c = getc(ulaz);
+      if (c == EOF)
+        break;
+      else if (c == '-' && brojDN == 0) {
+        neg = -1;
+      } else if (isdigit(c)) {
+        broj = broj * 10 + (c - '0');
+        brojDN = 1;
+      } else if (brojDN) {
+        broj *= neg;
+        if(!dodijeljenMax){
+            dodijeljenMax=1;
+            max=broj;
+        }
+        if (broj > max)
+          max = broj;
+        brojDN = 0;
+        neg = 1;
+        broj = 0;
+      } else
+        continue;
+    } while (1);
+    if(brojDN){
+        if(!dodijeljenMax)max=broj;
+        else {
+            broj*=neg;
+            if(broj>max)max=broj;
+        }
+    }
+    fprintf(izlaz, "%d", max);
+  }
+
+  fclose(izlaz);
+  fclose(ulaz);
+  return 0;
+}
+/*
+Zadatak
+Napišite program koji čita tekstualnu datoteku zadatak.txt, zatim pronalazi najveći broj u toj datoteci (ne najveću cifru!) 
+i taj podatak upisuje u datoteku rjesenje.txt.
+
+Primjer: ako ulazna datoteka glasi
+
+Broj 123 je veci od brojeva 45 i 89.
+U datoteci rjesenje.txt se treba nalaziti broj 123. Program treba raditi i za negativne brojeve npr. ako ulazna datoteka glasi
+
+Broj -123 je manji od brojeva -45 i -89.
+izlazna datoteka bi trebala sadržavati broj -45. Ako se u ulaznoj datoteci ne nalazi niti jedan broj, u izlaznu datoteku treba upisati broj 0. 
+Pri rješavanju zadatka je zabranjeno koristiti bilo kakve pomoćne nizove ili stringove.
+
+Napomena: U zadatku nije dozvoljeno koristiti funkciju fscanf.
+*/
