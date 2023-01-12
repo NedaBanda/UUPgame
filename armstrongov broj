@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <math.h>
+int armstrong(int n){
+    int a=n,novibr=0,brCifri=0;
+    while(a>0){
+        brCifri++;
+        a/=10;
+    }
+    a=n;
+    while(a>0){
+        novibr+=pow(a%10, brCifri);
+        a/=10;
+    }
+    if(n==novibr) return 1;
+    else return 0;
+}
+
+int main() {
+    int n;
+    printf("Unesite n: ");
+    scanf("%d",&n);
+    if(armstrong(n))printf("Broj %d je Armstrongov broj.",n);
+    else printf("Broj %d nije Armstrongov broj.",n);
+
+	return 0;
+}
+/*
+Zadatak
+Napisati funkciju armstrong koja za primljeni cjelobrojni parametar n ispituje da li je n Armstrongov broj, 
+koji se definiše kao broj od k cifara koji je jednak sumi svih cifara stepenovanih sa k. Funkcija treba vratiti 1 ako broj jeste Armstrongov, a 0 ako nije.
+
+Npr. za broj 371 treba da vrati 1, jer 371 jeste Armstrongov broj (33+ 73+ 13= 371), korišten je stepen k = 3 jer broj 371 ima 3 cifre.
+Još jedan primjer Armstrongovog broja je 1634 (14+ 64+ 34+ 44= 1634), k = 4.
+
+Napisati i kraću main funkciju koja omogućuje testiranje napisane funkcije armstrong. Primjeri ulaza i izlaza:
+
+Unesite n: 371
+Broj 371 je Armstrongov broj.
+Drugi primjer:
+
+Unesite n: 111
+Broj 111 nije Armstrongov broj.
+*/
