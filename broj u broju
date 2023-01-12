@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+int broj_sadrzan(unsigned int a, unsigned int b){
+    int ima=0,broj_cifri=10;
+    if(b>a) return 0;
+    if(b==a) return 1;
+    while(b>=broj_cifri){
+        broj_cifri*=10;
+    }
+    while(a && a>=b){   
+        if((a%broj_cifri)==b){
+            ima=1;
+            break;
+        }
+        else a/=10;
+    }
+    return ima;
+}
+
+
+int main() {
+    unsigned int a,b;
+    printf("Unesite broj a: ");
+    scanf("%d",&a);
+    printf("Unesite broj b: ");
+    scanf("%d",&b);
+    if(broj_sadrzan(a, b))printf("ISTINA");
+    else printf("NEISTINA");
+	return 0;
+}
+/*
+Zadatak
+Napišite funkciju sa prototipom:
+
+int broj_sadrzan(unsigned int a, unsigned int b)
+koja prima dva pozitivna cijela broja a i b čije su vrijednosti u opsegu dozvoljenih vrijednosti tipa unsigned int, a vraća logičku istinu 
+(cijeli broj 1) ako je broj b sadržan u broju a, a logičku neistinu (cijeli broj 0) ako nije. Npr. u broju 2358 sadržan je broj 35.
+
+Napravite i main funkciju koja omogućuje da se unesu dva cijela broja, poziva funkciju broj_sadrzan, te ispisuje tekst ISTINA ili NEISTINA 
+ovisno od toga šta je funkcija vratila.
+
+Primjeri ulaza i izlaza:
+Primjer 1:
+
+Unesite broj a: 2358
+Unesite broj b: 35
+ISTINA
+Primjer 2:
+
+Unesite broj a: 2358
+Unesite broj b: 223
+NEISTINA
+Primjer 3:
+
+Unesite broj a: 2358
+Unesite broj b: 8
+ISTINA
+Primjer 4:
+
+Unesite broj a: 2358
+Unesite broj b: 2358
+ISTINA
+Napomena: Zabranjeno je korištenje funkcija iz biblioteke string.h kao što je sprintf ili snprintf.
+*/
