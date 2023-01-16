@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+void Enkripcija(int pomak){
+    FILE *ulaz, *izlaz;
+    ulaz=fopen("Ulaz.txt", "r");
+    if(ulaz==NULL){
+        printf("Greska");
+        exit(1);
+    }
+    izlaz=fopen("EnkriptovanaPoruka.txt", "w");
+    if(izlaz==NULL){
+        printf("Greska2");
+        exit(1);
+    }
+    char c;
+    do{
+        c=getc(ulaz);
+            if(c==EOF)break;
+            if(isupper(c)){
+                c=(c+pomak%26+26-65)%26+65;
+                putc(c, izlaz);
+            }
+            else if(islower(c)){
+                c=(c+pomak%26+26-97)%26+97;
+                putc(c, izlaz);
+            }
+            else putc(c, izlaz);
+    }while(1);
+    fclose(izlaz);
+    fclose(ulaz);
+}
+
+
+void Dekripcija(int pomak){
+    FILE *ulaz,*izlaz;
+    ulaz=fopen("EnkriptovanaPoruka.txt","r");
+    if(ulaz==NULL){
+        printf("Greska");
+        exit(1);
+    }
+    izlaz=fopen("DekriptovanaPoruka.txt","w");
+    if(izlaz==NULL){
+        printf("Greska");
+        exit(1);
+    }
+    char c;
+    do{
+        c=getc(ulaz);
+        if(c==EOF)break;
+        else if(isupper(c)){
+            c=(c-pomak%26-65)%26+65;
+            putc(c,izlaz);
+        }
+        else if(islower(c)){
+            c=(c-pomak%26-97)%26+97;
+            putc(c,izlaz);
+        }
+        else putc(c,izlaz);
+        
+    }while(1);
+    fclose(ulaz);
+    fclose(izlaz);
+}
+
+int main() {
+    Enkripcija(5);
+    Dekripcija(5);
+	return 0;
+}
+/*
+Enkripcija ili šifriranje je proces kojim se orginalna poruka učini nečitljivom za osobe koje ne znaju ključ enkripcije. 
+Cesarova šifra je jedna od prvih i najjednostavnijih načina enkripcije. U pitanju je jednostavna zamjena slova poruke sa odredjenim pomakom, 
+na primjer ako je pomak 1 slovo A bi bilo zamijenjeno slovom B, slovo B sa slovom C, slovo Z sa slovom A, itd...
+Vaš zadatak je da napravite funkciju void Enkripcija(int pomak), koja će sadržaj iz datoteke Ulaz.txt 
+enkriptovati i upisati u datoteku EnkriptovanaPoruka.txt. Takodjer je potrebno napisati funkciju void Dekripcija(int pomak), 
+koja će dekriptovati sadržaj iz datoteke EnkriptovanaPoruka.txt i upisati ga u datoteku DekriptovanaPoruka.txt. Uzeti u obzir da se koristi engleski alfabet.
+
+Napomena: U zadatku nije dozvoljeno koristiti stringove!
+*/
