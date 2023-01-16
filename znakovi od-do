@@ -1,0 +1,57 @@
+#include <stdio.h>
+
+int main() {
+    FILE *ulaz,*izlaz;
+    char x,y,c;
+    printf("Unesite znakove x i y: ");
+    scanf("%c %c",&x,&y);
+    if(y<x){
+        printf("Pogresan unos\n");
+        return 0;
+    }
+    ulaz=fopen("input.txt", "r");
+    if(ulaz==NULL){
+        printf("Greska");
+        return 1;
+    }
+
+    izlaz=fopen("output.txt", "w");
+    if(izlaz==NULL){
+        printf("Greska");
+        return 2;
+    }
+
+    do{
+        c=getc(ulaz);
+        if(c>=x && c<=y)putc(c, izlaz);
+
+    }while(c!=EOF);
+
+
+    fclose(izlaz);
+    fclose(ulaz);
+	return 0;
+}
+/*
+Zadatak
+Napišite program koji obavlja sljedeći zadatak:
+Korisnik najprije sa tastature unosi dva znaka (karaktera) u varijable tipa char koje se zovu x i y.
+Ako je y po ASCII vrijednosti manje od x, treba na ekranu ispisati poruku "Pogresan unos" i prekinuti rad.
+U suprotnom, iz ulazne datoteke "input.txt" se čitaju podaci znak po znak, a u izlaznu datoteku output.txt se 
+zapisuju svi karakteri iz ulazne datoteke čija je ASCII vrijednost između x i y (uključujući i ta dva). 
+Pretpostavite da se u ulaznoj datoteci mogu nalaziti svi validni karakteri, a potrebno je razlikovati velika i mala slova.
+
+Primjer: neka je korisnik unio slova A i E. Ako ulazna datoteka glasi:
+
+OVO JE NEKA DATOTEKA. Dalje idu mala slova.
+Izlazna datoteka treba glasiti:
+
+EEADAEAD
+Primjer 2: korisnik je unio slova A i Z. Ako ulazna datoteka glasi:
+
+U ovoj Datoteci se Nalaze mijesana Velika i Mala slova.
+Izlazna datoteka treba glasiti:
+
+UDNVM
+Pri rješavanju programa je zabranjeno koristiti bilo kakve pomoćne stringove ili nizove. Pretpostavite da je ulazna datoteka neograničene dužine.
+*/
