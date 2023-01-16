@@ -49,11 +49,11 @@ void Dekripcija(int pomak){
         c=getc(ulaz);
         if(c==EOF)break;
         else if(isupper(c)){
-            c=(c-pomak%26-65)%26+65;
+            c=(c-pomak%26+26-65)%26+65;
             putc(c,izlaz);
         }
         else if(islower(c)){
-            c=(c-pomak%26-97)%26+97;
+            c=(c-pomak%26+26-97)%26+97;
             putc(c,izlaz);
         }
         else putc(c,izlaz);
