@@ -1,0 +1,66 @@
+#include <endian.h>
+#include <stdio.h>
+
+#include <math.h>
+#include <stdlib.h>
+void unesi_niz() {
+  int i = 0;
+  double broj, niz[100];
+  FILE *izlaz;
+  izlaz = fopen("niz.bin", "wb");
+  if (izlaz == NULL) {
+    printf("Greska pri kreiranju datoteke");
+    exit(1);
+  }
+  for (i = 0; i < 100; i++) {
+    scanf("%lf", &niz[i]);
+    if (fabs(niz[i] + 1) < 0.00001)
+      break;
+  }
+
+  fwrite(niz, 8, i, izlaz);
+  fclose(izlaz);
+}
+double srednja_vrijednost() {
+  double srednjaVrijednost = 0, niz[200];
+  int i = 0, brojElemenata;
+  FILE *ulaz;
+  ulaz = fopen("niz.bin", "rb");
+  if (ulaz == NULL) {
+    printf("Greska u srednjoj vrijednost");
+    return 0;
+  }
+
+  brojElemenata = fread(niz, 8, 101, ulaz);
+  if (!brojElemenata)
+    return 0;
+  while (i < brojElemenata && i < 100) {
+    srednjaVrijednost += niz[i++];
+  }
+  srednjaVrijednost /= brojElemenata;
+  fclose(ulaz);
+
+  return srednjaVrijednost;
+}
+
+int main() {
+  unesi_niz();
+  printf("%g\n", srednja_vrijednost());
+  return 0;
+}
+/*
+Napisati funkciju unesi_niz koja omogućuje korisniku da unese proizvoljan broj realnih brojeva (najviše 100) pri čemu se unos završava unosom broja -1. 
+Ovako unesen niz treba zapisati u binarnu datoteku niz.bin kao vrijednosti tipa double.
+Datoteka ne smije sadržavati ništa drugo osim članova niza (dakle ne smije sadržavati ni uneseni broj -1).
+
+Zatim napišite funkciju srednja_vrijednost koja izračunava srednju vrijednost brojeva koji se nalaze u datoteci niz.bin i vraća je. 
+Ako datoteka ne postoji ili je prazna, treba vratiti 0.
+
+main funkcija treba izgledati onako kako je navedeno u polaznoj main.c datoteci, a to je:
+
+int main() {
+    unesi_niz();
+    printf("%g\n", srednja_vrijednost());
+    return 0;
+}
+*/
