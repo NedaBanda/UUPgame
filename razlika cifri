@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+void oduzmi_cifre(int niz[],int duzina){
+    int i=0,j,obrnutBroj=0,dupljak,cifra,brojcifri,brojcifri2;
+    while(i<duzina){
+        j=0;
+        dupljak=abs(niz[i]);
+        obrnutBroj=0;
+        brojcifri=0,brojcifri2=0;
+        for(;dupljak>=10;dupljak/=10){
+            cifra=abs(dupljak%10-(dupljak%100/10));
+            obrnutBroj=obrnutBroj*10+cifra;
+            brojcifri++;
+        }
+        niz[i]=0;
+        for(;obrnutBroj>0;obrnutBroj/=10){
+            niz[i]=niz[i]*10+obrnutBroj%10;
+            brojcifri2++;
+        }
+        niz[i]*=pow(10,brojcifri-brojcifri2);
+        i++;
+    }
+}
+
+
+int main() {
+    int niz[3]={38279, 899990,100002};
+    oduzmi_cifre(niz, 3);
+    printf("%d\n%d\n%d\n",niz[0],niz[1],niz[2]);
+
+	return 0;
+}
+/*
+Zadatak
+Napisati funkciju oduzmi_cifre koja prima niz cijelih brojeva, a zatim svaki član niza prepravlja na sljedeći način: od prve cifre (s desne strane) 
+se oduzme druga cifra, od druge treća, od treće četvrta itd. Ako bi neka od ovih razlika bila negativan broj, uzima se njegova apsolutna vrijednost. 
+Ako korisnik unese negativan broj uzima se njegova apsolutna vrijednost, a ako unese jednocifren broj rezultat treba biti 0.
+
+Npr. ako je član niza broj 38279, nakon poziva funkcije taj član treba postati 5652.
+
+Objašnjenje: čitajući uneseni broj s desna na lijevo imamo:
+9-7=2, 7-2=5, 2-8=-6, 8-3=5
+a to su cifre konačnog broja gledano s desna na lijevo po apsolutnoj vrijednosti.
+*/
