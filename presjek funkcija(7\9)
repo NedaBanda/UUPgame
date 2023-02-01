@@ -1,0 +1,75 @@
+#include <math.h>
+#include <stdio.h>
+#define epsilon 0.0001
+
+double f(double x) { return tan(x); }
+double g(double x) { return -x + 2; }
+double h(double a) { return f(a) - g(a); }
+int poredjenje(double a) {
+  if (fabs(f(a) - g(a)) < epsilon)
+    return 1;
+  else
+    return 0;
+}
+int nula(double a) {
+  if (a < epsilon)
+    return 1;
+  else
+    return 0;
+}
+double presjek(double A, double B, int *status) {
+  double alfa = A, beta = B;
+  double sredina = (alfa + beta) / 2;
+  if (poredjenje(alfa) && poredjenje(beta) && poredjenje(sredina)) {
+    *status = 2;
+    return 0;
+  } else {
+    if (h(alfa) > 0 && h(sredina) < 0 || h(alfa) < 0 && h(sredina) > 0) {
+      beta = sredina;
+    } else {
+      alfa = sredina;
+    }
+  }
+  while (fabs(alfa - beta) > epsilon || nula(alfa) && nula(beta)) {
+    sredina = (alfa + beta) / 2;
+    if (poredjenje(sredina)) {
+      *status = 0;
+      return sredina;
+    } else if (poredjenje(alfa)) {
+      *status = 0;
+      return alfa;
+    } else if (poredjenje(beta)) {
+      *status = 0;
+      return beta;
+    }
+    else if (h(alfa) > 0 && h(sredina) < 0 || h(alfa) < 0 && h(sredina) > 0) {
+      beta = sredina;
+    } else if(h(sredina)>0 && h(beta)<0 || h(sredina)<0 && h(beta)>0) {
+      alfa = sredina;
+    }
+    else {
+        beta=sredina;
+    }
+  }
+  *status = 1;
+  return 0;
+}
+
+int main() {
+  int status=0;
+  printf("%lf,%d", presjek(1, 10, &status), status);
+  return 0;
+}
+/*
+Zadatak
+Date su funkcije double f(double x) i double g(double x). Potrebno je napisati funkciju sa prototipom:
+
+double presjek(double A, double B, int* status)
+Funkcija treba vratiti tačku x na intervalu [A,B] u kojoj se funkcije f(x) i g(x) sijeku, tj. daju istu vrijednost (pri čemu za provjeru jednakosti koristimo vrijednost ε=0.0001), te na adresu na koju pokazuje pokazivač status upisati vrijednost 0 (postaviti status na nulu). Ako postoji više takvih tačaka na ovom intervalu, funkcija treba vratiti jednu od njih prema algoritmu opisanom ispod. Ako se funkcije ne sijeku niti u jednoj tačci, treba postaviti status na 1 i vratiti 0. Ako su funkcije identične (sijeku se u svim tačkama), treba postaviti status 2 i vratiti 0.
+
+Problem određivanja tačaka u kojoj se funkcije f(x) i g(x) sijeku je identičan problemu pronalaska nula funkcije h(x)=f(x)-g(x), pa se mogu koristiti iste metode. Da biste dobili iste rezultate kao u testovima, u ovom zadatku trebate koristiti metodu polovljenja intervala koja se može opisati na sljedeći način:
+
+Najprije treba podijeliti interval [A,B] na dva jednaka podintervala [A,H] i [H,B] pri čemu je H=(A+B)/2. Ako je jedna od tačaka A, H ili B presjek funkcija, treba vratiti tu tačku. Ako se funkcije sijeku u sve tri tačke, trebamo smatrati da su funkcije identične. U suprotnom, traženje presjeka se nastavlja na jednom od ova dva podintervala na kojem funkcija h(x) mijenja znak. Npr. ako je h(A) pozitivno, a h(H) negativno, kažemo da funkcija h(x) mijenja znak na intervalu [A,H]. Ako funkcija mijenja znak na oba podintervala, nastavićemo traženje na podintervalu [A,H]. Ako ne mijenja niti na jednom, tražićemo presjek na oba podintervala sve dok širina intervala ne bude manja od δ=0.01, nakon čega smatramo da se funkcije ne sijeku.
+
+Pored navedene funkcije, vaš program treba sadržavati i funkcije f, g i main, kako bi se mogao kompajlirati i kako biste se uvjerili da radi ispravno. No, prilikom testiranja vaših rješenja, ove funkcije će biti zamijenjene testnim funkcijama.
+*/
