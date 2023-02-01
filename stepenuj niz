@@ -1,0 +1,78 @@
+#include <math.h>
+#include <stdio.h>
+
+double stepen(double x) {
+  static double broj;
+  static int stepen = 1;
+  if (fabs(x - broj) < 0.00001) {
+    stepen++;
+    return pow(x, stepen);
+    
+  } else {
+    stepen = 1;
+    broj=x;
+    return pow(x, stepen);
+    
+  }
+}
+void stepenuj_niz(double A[], int s[], int duzina) {
+  int i = 0, j = 0;
+  double novibroj;
+  while (i < duzina) {
+    j = 0;
+    while (j < s[i]) {
+      novibroj= stepen(A[i]);
+      j++;
+    }
+    A[i]=novibroj;
+    stepen(-1);
+    i++;
+  }
+}
+
+int main() {
+  int n, i, niz2[10000];
+  double niz[10000];
+  printf("Unesite velicinu za oba niza: ");
+  scanf("%d", &n);
+  printf("Unesite niz realnih brojeva: ");
+  for (i = 0; i < n; i++) {
+    scanf("%lf", &niz[i]);
+  }
+  printf("Unesite niz cijelih brojeva: ");
+  for (i = 0; i < n; i++) {
+    scanf("%d", &niz2[i]);
+  }
+  stepenuj_niz(niz, niz2, n);
+  printf("Nakon stepenovanja niz je: \n");
+  for (i = 0; i < n; i++) {
+    printf("%g ", niz[i]);
+  }
+
+  return 0;
+}
+/*
+Potrebno je napraviti funkciju double stepen(double x) koja radi na sljedeći način: svaki put kada se funkcija pozove sa datim brojem x, 
+ona će vratiti sljedeći stepen broja x, dakle prvi put vraća x1, zatim x2, x3, x4itd. Međutim, kada se pozove sa nekim drugim brojem x, stepen se resetuje na 1.
+
+Primjer:
+stepen(2) - vraća 2
+stepen(2) - vraća 4
+stepen(2) - vraća 8
+stepen(3) - vraća 3
+stepen(3) - vraća 9
+…
+
+Ovu funkciju iskoristite da biste napravili funkciju sa sljedećim prototipom:
+
+void stepenuj_niz(double A[], int s[], int duzina)
+
+Funkcija prima niz realnih brojeva A i niz prirodnih brojeva s koji su iste dužine duzina, 
+a zatim svaki član niza A stepenuje na eksponent dat u odgovarajućem članu niza s. 
+Funkcija obavezno mora koristiti ranije datu funkciju stepen, u suprotnom će zadatak biti bodovan sa 0 bodova.
+
+U postavci zadatka je uključena main funkcija Nije dozvoljeno izmijeniti ovu main funkciju! Kôd vaših funkcija stepen i stepenuj niz napišite iznad main funkcije, 
+umjesto komentara koji se tamo nalazi.
+
+Pri rješavanju zadatka nije dozvoljeno koristiti globalne promjenljive.
+*/
