@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <ctype.h>
+struct Grad {
+  char naziv[30];
+  int br_stanovnika;
+};
+
+int ucitaj(struct Grad *gradovi, int broj) {
+  FILE *ulaz = fopen("gradovi.txt", "r");
+  if (ulaz == NULL) {
+    printf("Greska u otvaranju datoteke");
+    return -1;
+  }
+  int i,j;
+  char c;
+  for (i = 0; i < broj;) {
+      j=0;
+      do{
+          c=getc(ulaz);
+        if(isdigit(c)){
+            fseek(ulaz, -1, SEEK_CUR);
+            break;
+        }
+        else{
+            gradovi[i].naziv[j]=c;
+            j++;
+        }   
+      }while(j<=30);
+        gradovi[i].naziv[--j]='\0';
+
+    if (fscanf(ulaz, "%d\n", &gradovi[i].br_stanovnika) ==1) {
+      i++;
+      continue;
+    } else
+      break;
+  }
+  fclose(ulaz);
+  return i;
+}
+void zapisi(struct Grad *gradovi, int brojGradova, int brojStanovnika) {
+  FILE *izlaz = fopen("izlaz.txt", "w");
+  if (izlaz == NULL) {
+    printf("Greska pri otvaranju datoteke\n");
+  }
+  int i = 0;
+  while (i < brojGradova) {
+    if (gradovi[i].br_stanovnika > brojStanovnika) {
+      fprintf(izlaz, "%s\n", gradovi[i].naziv);
+    }
+    if (ferror(izlaz)) {
+      printf("greska unlucky:(");
+      break;
+    }
+    i++;
+  }
+  fclose(izlaz);
+}
+void ispis(struct Grad *gradovi, int broj_gradova, char slovo) {
+  int i = 0;
+  while (i < broj_gradova) {
+    if (gradovi[i].naziv[0] == slovo) {
+      printf("%s\n", gradovi[i].naziv);
+    }
+    i++;
+  }
+}
+int main() {
+  struct Grad gradovi[100];
+  int br_gradova = ucitaj(gradovi, 100);
+  printf("Broj gradova: %d\n", br_gradova);
+  if (br_gradova > 0) {
+    printf("Prvi grad: %s (%d)\n", gradovi[0].naziv, gradovi[0].br_stanovnika);
+  }
+  zapisi(gradovi, br_gradova, 100000);
+  ispis(gradovi, br_gradova, 'A');
+  return 0;
+}
+
+/*
+Zadatak
+Data je main funkcija na serveru. Potrebno je da napišete ostatak programa tj. kod funkcija ucitaj, zapisi i definiciju strukture 
+Grad tako da program obavlja sljedeći zadatak:
+
+U datoteci gradovi.txt svaki red se sastoji od: naziva grada (tekst dužine max. 30 znakova u kojem se mogu nalaziti i razmaci npr. 
+Banja Luka) i broj stanovnika grada (prirodan broj). Potrebno je funkcijom ucitaj učitati podatke iz te datoteke u niz tipa struct Grad, 
+pri čemu se iz datoteke učitava maksimalno n gradova gdje je n drugi parametar funkcije ucitaj. Ako se u datoteci nalazi više od n gradova, 
+treba biti učitano samo prvih n kako se program ne bi krahirao. Program treba raditi i ako datoteka nije ispravno formatirana, odnosno ne smije se 
+krahirati i treba ispisati tačne podatke barem za dio datoteke iznad pogrešnog.
+
+Zatim treba funkcijom zapisi u izlaznu datoteku izlaz.txt zapisati imena gradova (po jedno ime u svakom redu, bez visine) koji imaju više stanovnika od 
+broja koji je dat kao treći parametar funkcije. Funkcija ispis na ekranu ispisuje imena gradova (po jedno ime u svakom redu, bez visine) 
+čije ime počinje slovom koje je dato kao treći parametar funkcije.
+*/
