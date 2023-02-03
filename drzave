@@ -1,0 +1,88 @@
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+struct Drzava {
+  char ime_drzave[50], glavni_grad[50];
+  int broj_stanovnika, broj_stanovnika_gg;
+};
+
+struct Drzava drzave[1000];
+int br_drzava = 0;
+
+int ucitaj() {
+  FILE *ulaz = fopen("ulaz.txt", "r");
+  if (ulaz == NULL) {
+    printf("Greska pri otvaranju:(");
+    return 0;
+  }
+
+  int i = 0;
+  while (i < 1000) {
+    if (fscanf(ulaz, "%s %d %s %d\n", drzave[i].ime_drzave,
+               &drzave[i].broj_stanovnika, drzave[i].glavni_grad,
+               &drzave[i].broj_stanovnika_gg) == 4) {
+      i++;
+      br_drzava++;
+      continue;
+    }
+    break;
+  }
+  fclose(ulaz);
+  return 1;
+}
+
+int zapisi() {
+  FILE *izlaz = fopen("izlaz.txt", "w");
+  if (izlaz == NULL) {
+    printf("Greska");
+    return 0;
+  }
+  int i = 0, j;
+  double procenat;
+  while (i < br_drzava) {
+    procenat = ((double)(drzave[i].broj_stanovnika_gg) / drzave[i].broj_stanovnika) * 100;
+    if (procenat >= 20) {
+      j = 0;
+      while (j < 50) {
+        if (drzave[i].ime_drzave[j] != '.' &&
+            j < strlen(drzave[i].ime_drzave)) {
+          putc(drzave[i].ime_drzave[j], izlaz);
+        } else
+          putc(' ', izlaz);
+        j++;
+      }
+      putc(' ', izlaz);
+      fprintf(izlaz, "%d %.2f\n", drzave[i].broj_stanovnika, procenat);
+    }
+    i++;
+  }
+    fclose(izlaz);
+  return 1;
+}
+
+int main() {
+  ucitaj();
+  zapisi();
+  return 0;
+}
+
+/*
+Zadatak
+Data je datoteka ulaz.txt koja se nalazi u tekućem direktoriju a njena je struktura sljedeća: U svakom redu datoteke nalazi se naziv države, 
+broj stanovnika države, naziv glavnog grada i broj stanovnika u glavnom gradu, razdvojeni razmakom. 
+Za naziv države i grada je dato da nisu duži od 49 znakova, te da su razmaci u imenu zamijenjeni znakom tačka kako bi se ovi podaci mogli učitati funkcijom fscanf 
+sa formatom %s. Broj stanovnika države i grada su pozitivni cijeli brojevi ne veći od opsega tipa int.
+
+Funkcija ucitaj treba učitati podatke iz ove datoteke u niz struktura Drzava:
+
+struct Drzava {
+   char ime_drzave[50], glavni_grad[50];
+   int broj_stanovnika, broj_stanovnika_gg;
+};
+Ovaj niz treba biti dat kao globalna promjenljiva drzave, a broj učitanih država kao globalna promjenljiva br_drzava. 
+Pretpostaviti da se u datoteci nalazi najviše 1000 država, ali program se ne treba krahirati ako se nalazi više od toga.
+
+Funkcija zapisi treba u izlaznu datoteku izlaz.txt zapisati one države u čijem glavnom gradu živi više od 20% stanovnika države u formatu: naziv države, 
+broj stanovnika u državi, procenat stanovnika koji žive u glavnom gradu, razdvojeno razmakom. Ovaj procenat treba zapisati na fiksno dvije decimale (bez znaka %), 
+a naziv države upisati u prostor od 50 mjesta. Prilikom ispisa naziva države treba znak tačku zamijeniti razmakom. Svaka država se treba nalaziti u zasebnom redu.
+*/
