@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+struct Planina{
+    char naziv[30];
+    int visina;
+};
+
+int ucitaj(struct Planina *planine, int n){
+    FILE *ulaz=fopen("ulaz.txt", "r");
+    if(ulaz==NULL){
+        printf("Greska1");
+        return 0;
+    }
+    int i=0;
+    while(i<n){
+        if(fscanf(ulaz, "%s %d\n", planine[i].naziv,&planine[i].visina)==2){
+            i++;
+        }
+        else
+        break;
+    }
+    fclose(ulaz);
+    return i;
+}
+
+int zapisi(struct Planina *planine, int n, int maxVisina){
+    FILE*izlaz=fopen("izlaz.txt", "w");
+    if(izlaz==NULL){
+        printf("Greska");
+        return 0;
+    }
+    int i=0;
+    while (i<n) {
+        if(planine[i].visina>maxVisina){
+            fprintf(izlaz, "%s\n", planine[i].naziv);
+        }
+        i++;
+    }
+
+    fclose(izlaz);
+    return 1;
+}
+
+
+
+int main() {
+	printf("Lekcija 10: Datoteke sa strukturama, Planine");
+	return 0;
+}
+
+/*
+Zadatak
+Data je main funkcija na serveru. Potrebno je da napišete ostatak programa tj. 
+kod funkcija ucitaj, zapisi i definiciju strukture Planina tako da program obavlja sljedeći zadatak:
+
+U datoteci ulaz.txt svaki red se sastoji od: naziva planine (tekst dužine max. 30 znakova bez razmaka) i visina planine u metrima (cijeli broj). 
+Potrebno je funkcijom ucitaj učitati podatke iz te datoteke u niz tipa struct Planina, pri čemu se iz datoteke učitava maksimalno n planina gdje je n drugi parametar 
+funkcije ucitaj. Ako se u datoteci nalazi više od n planina, biće učitano samo prvih n kako se program ne bi krahirao.
+Program treba raditi i ako datoteka nije ispravno formatirana, odnosno ne smije se krahirati i treba ispisati tačne podatke barem za dio datoteke iznad pogrešnog.
+
+Zatim treba funkcijom zapisi u izlaznu datoteku izlaz.txt zapisati imena planina (po jedno ime u svakom redu, bez visine) koje su više od maksimalne visine koja je 
+dana kao treći parametar funkcije.
+*/
