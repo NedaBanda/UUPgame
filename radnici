@@ -1,0 +1,93 @@
+#include <stdio.h>
+#define epsilon 0.00001
+#include <math.h>
+struct Radnik{
+    char ime[20],prezime[20];
+    int godina;
+    double plata[12];
+};
+struct Radnik radnici[1000];
+int br_radnika=1000;
+
+int ucitaj(){
+    FILE *unos=fopen("ulaz.txt", "r");
+    if(unos==NULL){
+        printf("greska");
+        return 0;
+    }
+    int i=0,j,broj;
+    while(i<br_radnika){
+        if(fscanf(unos, "%s %s %d ", radnici[i].ime,radnici[i].prezime,&radnici[i].godina)==3){
+            if(fscanf(unos,"%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n",&radnici[i].plata[0],&radnici[i].plata[1],&radnici[i].plata[2],&radnici[i].plata[3],&radnici[i].plata[4],
+            &radnici[i].plata[5],&radnici[i].plata[6],&radnici[i].plata[7],&radnici[i].plata[8],&radnici[i].plata[9],&radnici[i].plata[10],&radnici[i].plata[11])!=12){
+                break;
+            }
+        }
+        else {
+            break;
+        }
+        i++;
+    }
+    br_radnika=i;
+
+    return 1;
+}
+int zapisi(){
+    FILE *ispis=fopen("izlaz.txt","w");
+    if(ispis==NULL){
+        printf("Greska");
+        return 0;
+    }
+    int i=0,j;
+    double prosjecna_plata;
+    while(i<br_radnika){
+        if(radnici[i].godina==2010){
+            j=0,prosjecna_plata=0;
+            while(j<12){
+                prosjecna_plata+=radnici[i].plata[j];
+                j++;
+            }
+            prosjecna_plata/=12;
+            if(prosjecna_plata-1000>epsilon){
+                fprintf(ispis, "%s %s %.2f\n", radnici[i].ime,radnici[i].prezime,prosjecna_plata);
+                if(ferror(ispis)){
+                    printf("Greska pri ispisu");
+                    fclose(ispis);
+                    return 1;
+                }
+            }
+        }
+        i++;
+    }
+
+    fclose(ispis);
+    return 1;
+}
+
+
+int main() {
+    ucitaj();
+    zapisi();
+	return 0;
+}
+
+/*
+Zadatak
+Data je datoteka ulaz.txt koja se nalazi u tekućem direktoriju a njena je struktura sljedeća: u svakom redu se nalazi ime i prezime radnika, godina zaposlenja, 
+a zatim 12 realnih brojeva koji predstavljaju iznos plate tokom svakog mjeseca u 2015. godini. 
+Pretpostavite da se u imenu i prezimenu ne nalaze razmaci te da sadrže maksimalno 19 slova. U datoteci se nalazi do 1000 radnika, ako ih se nalazi više od
+1000 treba učitati prvih 1000.
+
+Funkcija ucitaj treba učitati podatke iz ove datoteke u niz struktura Radnik:
+
+struct Radnik {
+    char ime[20], prezime[20];
+    int godina;
+    double plata[12];
+}
+Ovaj niz treba biti dat kao globalna promjenljiva radnici, a broj učitanih radnika kao globalna promjenljiva br_radnika.
+
+Funkcija zapisi treba u izlaznu datoteku izlaz.txt zapisati one radnike koji su zaposleni tokom 2010. godine a čija je prosječna plata tokom svih 12 mjeseci 
+bila veća od 1000 KM. Format datoteke treba biti: ime, prezime, te iznos prosječne plate, razdvojeni razmakom. Iznos treba biti zaokružen na dvije decimale, 
+a svaki radnik se treba nalaziti u zasebnom redu.
+*/
